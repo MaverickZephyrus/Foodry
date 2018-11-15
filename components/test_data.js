@@ -39,7 +39,7 @@ export const test_data = [
     },
     {
         img: "https://pixabay.com/get/ea31b70620f11c22d2524518b74d4695e475e0d118ac104491f1c97ba1e9b7b9_1280.jpg",
-        location: "6082 Fraser St, Vancouver, BC V5W 2Z7",
+        location: "#1-4287, Kingsway, Burnaby, BC V5H 1Z5",
         food_name: "Pizza",
         cost: "$15.99", 
         restaurant: "Pizza Hut"

@@ -29,7 +29,7 @@ export default class MyPlaceScreen extends React.Component {
             fontWeight: 'bold',
         },
         headerLeft: (
-            <SearchBar containerStyle={{width: ITEM_WIDTH}} placeholder="Filter..."  onChangeText={navigation.getParam('increaseCount')}/>
+            <SearchBar containerStyle={{width: ITEM_WIDTH}} placeholder="Filter..." onChangeText={navigation.getParam('increaseCount')}/>
         ),
         headerRight: (
             <IconM style={{textAlign: 'right', padding:15}} name="add" size={25} color="white" />
@@ -48,7 +48,17 @@ export default class MyPlaceScreen extends React.Component {
     }
     componentDidMount() {
         this.props.navigation.setParams({ increaseCount: this._handleSearch });
-      }
+        this._uniqueplace();
+      };
+
+    _uniqueplace = () => {
+        var unique = this.state.data.filter((set => u => !set.has(u.location) && set.add(u.location))(new Set));
+        this.setState({
+            data: unique,
+            fullData: unique,
+        });
+    };
+
     _handleSearch = (text) =>{
         const data = _.filter(this.state.fullData, (lc) =>
         {return lc.restaurant.toLowerCase().indexOf(text.toLowerCase()) != -1 || lc.location.toLowerCase().indexOf(text.toLowerCase()) != -1})
