@@ -29,7 +29,11 @@ export default class MyPlaceScreen extends React.Component {
             fontWeight: 'bold',
         },
         headerLeft: (
+<<<<<<< HEAD
             <SearchBar containerStyle={{width: ITEM_WIDTH}} placeholder="Filter..." onChangeText={navigation.getParam('increaseCount')}/>
+=======
+            <SearchBar containerStyle={{width: ITEM_WIDTH}} placeholder="Filter..."  onChangeText={navigation.getParam('increaseCount')}/>
+>>>>>>> 800ec6b5379ad9e807e8b3e306e07f9874d8585c
         ),
         headerRight: (
             <IconM style={{textAlign: 'right', padding:15}} name="add" size={25} color="white" />
