@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, StatusBar } from 'react-native';
 import { createStackNavigator, createMaterialTopTabNavigator } from 'react-navigation';
 import { fadeIn } from 'react-navigation-transitions';
 
@@ -47,6 +47,7 @@ const RootTab = createMaterialTopTabNavigator(
         inactiveTintColor: 'gray',
         style: {
           backgroundColor: '#000',
+          paddingTop: StatusBar.currentHeight
       },
       labelStyle:{
         fontWeight: 'bold',
