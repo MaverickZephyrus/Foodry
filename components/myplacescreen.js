@@ -8,6 +8,11 @@ const ITEM_HEIGHT = Dimensions.get("window").height;
 import { test_data } from "./test_data";
 import { Header } from "react-navigation";
 
+// UPDATE: changed i to i.toString() at line 81 because it was causing errors.
+//         keyExtractor expecting a string but you were giving it an int with i.
+
+// TODO:  - add Touch component to + button. set it to onPress={() => this.props.navigation.navigate('AddPlace')}
+
 export default class MyPlaceScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
@@ -79,7 +84,7 @@ export default class MyPlaceScreen extends React.Component {
       source={{uri:'https://images.unsplash.com/photo-1520405350075-ea8df9ae72a5?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=56df2db5de7d9fe47c39161937d88baf&auto=format&fit=crop&w=934&q=80'}}> 
         <FlatList
           data={this.state.data}
-          keyExtractor={(x, i) => i}
+          keyExtractor={(x, i) => i.toString()}
           key={key}
           numColumns={column}
           renderItem={({ item }) => (

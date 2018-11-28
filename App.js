@@ -7,8 +7,9 @@ import MainScreen from './components/mainscreen';
 import MyPlaceScreen from './components/myplacescreen';
 import AddScreen from './components/AddScreen';
 import FoodDetails from './components/FoodDetails'
+import AddPlace from './components/addplace'
 
-//NOTE: 
+
 const MainStack = createStackNavigator(
   {
     Main: {
@@ -31,10 +32,12 @@ const MyPlaceStack = createStackNavigator(
     },
     FoodDetails:{
       screen: FoodDetails
-    }
+    },
+    AddPlace: AddPlace
     },
     {
       initialRouteName: 'MyPlace',
+      // initialRouteName: 'AddPlace',
        transitionConfig: () => fadeIn(),
     }
 )
