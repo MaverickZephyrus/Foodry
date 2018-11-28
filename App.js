@@ -5,8 +5,8 @@ import { fadeIn } from 'react-navigation-transitions';
 
 import MainScreen from './components/mainscreen';
 import MyPlaceScreen from './components/myplacescreen'
+import AddPlace from './components/addplace'
 
-//NOTE: 
 const MainStack = createStackNavigator(
   {
     Main: {
@@ -21,12 +21,12 @@ const MainStack = createStackNavigator(
 
 const MyPlaceStack = createStackNavigator(
   {
-    MyPlace: {
-      screen: MyPlaceScreen
-    },
+    MyPlace: MyPlaceScreen,
+    AddPlace: AddPlace
     },
     {
       initialRouteName: 'MyPlace',
+      // initialRouteName: 'AddPlace',
        transitionConfig: () => fadeIn(),
     }
 )
