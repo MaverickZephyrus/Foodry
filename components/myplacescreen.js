@@ -89,6 +89,10 @@ export default class MyPlaceScreen extends React.Component {
                   width: (ITEM_WIDTH - 5 * column) / column,
                   textAlign: "center"
                 }}
+                onPress={() => {
+                  this.props.navigation.navigate('FoodDetails',{
+                    location: item.location, restaurant: item.restaurant})
+            }}
               >
                 <Bold>{item.restaurant}</Bold> {"\n"}@ {item.location}
               </Text>
@@ -100,6 +104,9 @@ export default class MyPlaceScreen extends React.Component {
           name="add-circle"
           size={ITEM_WIDTH / 6}
           color='rgba(0, 0, 0)'
+          onPress={() => {
+            this.props.navigation.navigate('AddScreen')
+      }}
         />
       </ImageBackground>
       </View>

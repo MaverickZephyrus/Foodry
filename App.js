@@ -4,7 +4,9 @@ import { createStackNavigator, createMaterialTopTabNavigator } from 'react-navig
 import { fadeIn } from 'react-navigation-transitions';
 
 import MainScreen from './components/mainscreen';
-import MyPlaceScreen from './components/myplacescreen'
+import MyPlaceScreen from './components/myplacescreen';
+import AddScreen from './components/AddScreen';
+import FoodDetails from './components/FoodDetails'
 
 //NOTE: 
 const MainStack = createStackNavigator(
@@ -24,6 +26,12 @@ const MyPlaceStack = createStackNavigator(
     MyPlace: {
       screen: MyPlaceScreen
     },
+    AddScreen:{
+      screen: AddScreen
+    },
+    FoodDetails:{
+      screen: FoodDetails
+    }
     },
     {
       initialRouteName: 'MyPlace',

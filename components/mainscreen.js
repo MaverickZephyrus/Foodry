@@ -142,16 +142,16 @@ export default class MainScreen extends React.Component {
                         <ScrollView contentContainerStyle={styles.modal}>
                                 <Icon style={styles.textx} name="close" size={25}  onPress={() => {this.setModalVisible(false, 0)}} color="#000" />
                                 
-                                <Image style={{flex:1, resizeMode: 'contain'}} source={{uri: this.state.fullData[Number(this.state.itemindex)].img}}></Image>
+                                <Image style={{flex:1, resizeMode: 'contain'}} source={{uri: this.state.data[Number(this.state.itemindex)].img}}></Image>
                               
                                 <Text
                                     style={{
                                         margin: 10,
                                     }}
                                     >
-                                    <Bold>{this.state.fullData[Number(this.state.itemindex)].food_name}</Bold> --- {this.state.fullData[Number(this.state.itemindex)].cost} @ {this.state.fullData[Number(this.state.itemindex)].restaurant} {"\n"} {"\n"} " {this.state.fullData[Number(this.state.itemindex)].notes} " 
+                                    <Bold>{this.state.data[Number(this.state.itemindex)].food_name}</Bold> --- {this.state.data[Number(this.state.itemindex)].cost} @ {this.state.data[Number(this.state.itemindex)].restaurant} {"\n"} {"\n"} " {this.state.data[Number(this.state.itemindex)].notes} " 
                                 </Text>
-                                <Text style={{ margin: 10, fontSize:11, color:'grey'}}>{this.state.fullData[Number(this.state.itemindex)].date} </Text>
+                                <Text style={{ margin: 10, fontSize:11, color:'grey'}}>{this.state.data[Number(this.state.itemindex)].date} </Text>
                         </ScrollView>
                     </View>
                 </Modal>
