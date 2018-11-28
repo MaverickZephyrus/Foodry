@@ -4,8 +4,11 @@ import { createStackNavigator, createMaterialTopTabNavigator } from 'react-navig
 import { fadeIn } from 'react-navigation-transitions';
 
 import MainScreen from './components/mainscreen';
-import MyPlaceScreen from './components/myplacescreen'
+import MyPlaceScreen from './components/myplacescreen';
+import AddScreen from './components/AddScreen';
+import FoodDetails from './components/FoodDetails'
 import AddPlace from './components/addplace'
+
 
 const MainStack = createStackNavigator(
   {
@@ -21,7 +24,15 @@ const MainStack = createStackNavigator(
 
 const MyPlaceStack = createStackNavigator(
   {
-    MyPlace: MyPlaceScreen,
+    MyPlace: {
+      screen: MyPlaceScreen
+    },
+    AddScreen:{
+      screen: AddScreen
+    },
+    FoodDetails:{
+      screen: FoodDetails
+    },
     AddPlace: AddPlace
     },
     {
