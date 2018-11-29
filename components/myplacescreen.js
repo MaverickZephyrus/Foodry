@@ -8,7 +8,7 @@ const ITEM_HEIGHT = Dimensions.get("window").height;
 import { test_data } from "./test_data";
 import { Header } from "react-navigation";
 
-// UPDATE: changed i to i.toString() at line 81 because it was causing errors.
+// UPDATE: changed i to i.toString() at line 87 because it was causing errors.
 //         keyExtractor expecting a string but you were giving it an int with i.
 
 // TODO:  - add Touch component to + button. set it to onPress={() => this.props.navigation.navigate('AddPlace')}
@@ -110,7 +110,7 @@ export default class MyPlaceScreen extends React.Component {
           size={ITEM_WIDTH / 6}
           color='rgba(0, 0, 0)'
           onPress={() => {
-            this.props.navigation.navigate('AddScreen')
+            this.props.navigation.navigate('AddPlace')
       }}
         />
       </ImageBackground>
