@@ -11,7 +11,8 @@ import {
   TouchableHighlight,
   Modal,
   ScrollView,
-  StatusBar
+  StatusBar,
+  ImageBackground
 } from "react-native";
 import _ from 'lodash';
 import {SearchBar} from 'react-native-elements';
@@ -31,6 +32,8 @@ export default class MainScreen extends React.Component {
             fullData: test_data,
             modalVisible: false,
             itemindex: '0',
+            box1:'#000',
+            box2:'#606060'
         }
     }
 
@@ -45,12 +48,8 @@ export default class MainScreen extends React.Component {
         headerTitleStyle: {
             fontWeight: 'bold',
         },
-        // headerRight: (
-        //     <IconM style={{textAlign: 'right', padding:15}} name="add" size={25} color="#fff" />
-        // ),
         headerLeft: (
-            // <Icon style={{textAlign: 'right', padding:15}} name="search" size={25} color="#fff" />
-        <SearchBar containerStyle={{width: ITEM_WIDTH}} placeholder="Filter..."  onChangeText={navigation.getParam('increaseCount')}/> 
+        <SearchBar containerStyle={{width: ITEM_WIDTH}} placeholder="Filter..." lightTheme onChangeText={navigation.getParam('increaseCount')}/> 
         ),
     }
     };
@@ -80,25 +79,26 @@ export default class MainScreen extends React.Component {
         const Bold = (props) => <Text style={{fontWeight: 'bold'}}>{props.children}</Text>
         return (
             <View style={styles.container}>
-            {/* <StatusBar hidden={true} /> */}
-            {/* <SearchBar containerStyle={{width: ITEM_WIDTH}} placeholder="Filter..." lightTheme onChangeText={this.handleSearch}/>  */}
+             <ImageBackground style={ styles.imgBackground } 
+      resizeMode='cover' 
+      source={{uri:'https://images.unsplash.com/photo-1520405350075-ea8df9ae72a5?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=56df2db5de7d9fe47c39161937d88baf&auto=format&fit=crop&w=934&q=80'}}>
             <View style={{width: ITEM_WIDTH,
-        flexDirection: 'row',justifyContent: 'space-evenly', backgroundColor:'#fff'}}>
+        flexDirection: 'row',justifyContent: 'space-evenly', backgroundColor:'#fff',marginTop:2}}>
          <TouchableWithoutFeedback  
         onPress={() => {
-                    this.setState({column: 2, key:key+1});
+                    this.setState({column: 2, key:key+1, box1:'#000000', box2:'#606060'});
                   }}>
         <View style={{width:ITEM_WIDTH/2}}>
-        <Icon style={{padding:5, textAlign:'center'}} name="grid-large" size={25} color="#000" />
+        <Icon style={{padding:5, textAlign:'center'}} name="grid-large" size={25} color={this.state.box1} />
         </View>
         </TouchableWithoutFeedback>
-        <Text></Text>
+        <Text style={{fontSize:25}}>|</Text>
         <TouchableWithoutFeedback  
         onPress={() => {
-                    this.setState({column: 1, key:key+1});
+                    this.setState({column: 1, key:key+1, box1:'#606060', box2:'#000000'});
                   }}>
         <View style={{width:ITEM_WIDTH/2}}>
-        <Icon style={{padding:5, textAlign:'center'}} name="checkbox-blank-outline" size={25} color="#000" />
+        <Icon style={{padding:5, textAlign:'center'}} name="checkbox-blank-outline" size={25} color={this.state.box2} />
         </View>
         </TouchableWithoutFeedback>
         </View>
@@ -112,16 +112,12 @@ export default class MainScreen extends React.Component {
                     <TouchableHighlight
                         onPress={() => { this.setModalVisible(true, index)}}>
                         
-                        <View style={{backgroundColor: '#DCDCDC', margin: 2, borderRadius: 5}}>
+                        <View style={{backgroundColor: 'rgba(255, 255, 255, 0.5)', margin: 2, borderRadius: 5}}>
                     
                             <Image
                                 style={{
                                     width: (ITEM_WIDTH - 5 * column) / column,
                                     height: (ITEM_WIDTH - 5 * column) / column,
-                                    marginRight: 2,
-                                    marginBottom: 2,
-                                    marginTop: 2,
-                                    marginLeft: 0,
                                     borderRadius: 5
                                 }}
                                 source={{ uri: item.img }}
@@ -129,7 +125,6 @@ export default class MainScreen extends React.Component {
                                 <Text
                                 style={{
                                     width: (ITEM_WIDTH - 5 * column) / column,
-                                    marginLeft: 2,
                                     textAlign:'center'
                                 }}
                                 >
@@ -147,20 +142,20 @@ export default class MainScreen extends React.Component {
                         <ScrollView contentContainerStyle={styles.modal}>
                                 <Icon style={styles.textx} name="close" size={25}  onPress={() => {this.setModalVisible(false, 0)}} color="#000" />
                                 
-                                <Image style={{flex:1, resizeMode: 'contain'}} source={{uri: this.state.fullData[Number(this.state.itemindex)].img}}></Image>
+                                <Image style={{flex:1, resizeMode: 'contain'}} source={{uri: this.state.data[Number(this.state.itemindex)].img}}></Image>
                               
                                 <Text
                                     style={{
                                         margin: 10,
                                     }}
                                     >
-                                    <Bold>{this.state.fullData[Number(this.state.itemindex)].food_name}</Bold> --- {this.state.fullData[Number(this.state.itemindex)].cost} @ {this.state.fullData[Number(this.state.itemindex)].restaurant} {"\n"} {"\n"} " {this.state.fullData[Number(this.state.itemindex)].notes} " 
+                                    <Bold>{this.state.data[Number(this.state.itemindex)].food_name}</Bold> --- {this.state.data[Number(this.state.itemindex)].cost} @ {this.state.data[Number(this.state.itemindex)].restaurant} {"\n"} {"\n"} " {this.state.data[Number(this.state.itemindex)].notes} " 
                                 </Text>
-                                <Text style={{ margin: 10, fontSize:11, color:'grey'}}>{this.state.fullData[Number(this.state.itemindex)].date} </Text>
+                                <Text style={{ margin: 10, fontSize:11, color:'grey'}}>{this.state.data[Number(this.state.itemindex)].date} </Text>
                         </ScrollView>
                     </View>
                 </Modal>
-                
+                </ImageBackground>
             </View> 
 
         );
@@ -181,5 +176,10 @@ const styles = StyleSheet.create({
     textx: {
         paddingTop: 30,
         paddingLeft: ITEM_WIDTH - 50,
-    }
+    },
+    imgBackground: {
+      width: '100%',
+      height: '100%',
+      flex: 1 
+  },
 });

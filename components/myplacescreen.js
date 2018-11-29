@@ -1,12 +1,17 @@
 import React from "react";
-import { StyleSheet, View, Dimensions, Text, FlatList, KeyboardAvoidingView } from "react-native";
+import { StyleSheet, View, Dimensions, Text, FlatList, ImageBackground } from "react-native";
 import _ from "lodash";
 import IconM from "react-native-vector-icons/MaterialIcons";
 import { SearchBar } from "react-native-elements";
 const ITEM_WIDTH = Dimensions.get("window").width;
 const ITEM_HEIGHT = Dimensions.get("window").height;
 import { test_data } from "./test_data";
-import { Header } from 'react-navigation';
+import { Header } from "react-navigation";
+
+// UPDATE: changed i to i.toString() at line 87 because it was causing errors.
+//         keyExtractor expecting a string but you were giving it an int with i.
+
+// TODO:  - add Touch component to + button. set it to onPress={() => this.props.navigation.navigate('AddPlace')}
 
 export default class MyPlaceScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
@@ -24,6 +29,7 @@ export default class MyPlaceScreen extends React.Component {
         <SearchBar
           containerStyle={{ width: ITEM_WIDTH }}
           placeholder="Filter..."
+          lightTheme
           onChangeText={navigation.getParam("increaseCount")}
         />
       )
@@ -73,9 +79,12 @@ export default class MyPlaceScreen extends React.Component {
     );
     return (
       <View style={styles.container}>
+        <ImageBackground style={ styles.imgBackground } 
+      resizeMode='cover' 
+      source={{uri:'https://images.unsplash.com/photo-1520405350075-ea8df9ae72a5?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=56df2db5de7d9fe47c39161937d88baf&auto=format&fit=crop&w=934&q=80'}}> 
         <FlatList
           data={this.state.data}
-          keyExtractor={(x, i) => i}
+          keyExtractor={(x, i) => i.toString()}
           key={key}
           numColumns={column}
           renderItem={({ item }) => (
@@ -83,9 +92,12 @@ export default class MyPlaceScreen extends React.Component {
               <Text
                 style={{
                   width: (ITEM_WIDTH - 5 * column) / column,
-                  marginLeft: 2,
                   textAlign: "center"
                 }}
+                onPress={() => {
+                  this.props.navigation.navigate('FoodDetails',{
+                    location: item.location, restaurant: item.restaurant})
+            }}
               >
                 <Bold>{item.restaurant}</Bold> {"\n"}@ {item.location}
               </Text>
@@ -96,8 +108,12 @@ export default class MyPlaceScreen extends React.Component {
           style={styles.add_circle_icon}
           name="add-circle"
           size={ITEM_WIDTH / 6}
-          color="black"
+          color='rgba(0, 0, 0)'
+          onPress={() => {
+            this.props.navigation.navigate('AddPlace')
+      }}
         />
+      </ImageBackground>
       </View>
     );
   }
@@ -110,15 +126,25 @@ const styles = StyleSheet.create({
     flex: 1
   },
   add_circle_icon: {
-    right:0,
+    right: 0,
     bottom: 0,
     width: ITEM_WIDTH / 6,
     margin: 20,
-    position:'absolute'
+    position: "absolute",
+    backgroundColor:'rgba(255,255,255,0.4)',
+    borderRadius:50,
   },
   flatlist_view: {
-    backgroundColor: "#DCDCDC",
+    backgroundColor:'rgba(255,255,255,0.5)',
     marginVertical: 2,
-    borderRadius: 5
-  }
+    borderRadius: 5,
+    height: 50,
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  imgBackground: {
+    width: '100%',
+    height: '100%',
+    flex: 1
+},
 });
