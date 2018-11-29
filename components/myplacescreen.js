@@ -6,29 +6,10 @@ import { SearchBar } from "react-native-elements";
 const ITEM_WIDTH = Dimensions.get("window").width;
 const ITEM_HEIGHT = Dimensions.get("window").height;
 import { test_data } from "./test_data";
-import { Header } from "react-navigation";
 
 export default class MyPlaceScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
-    return {
-      title: "My Places",
-      headerStyle: {
-        backgroundColor: "#282828",
-        marginTop: -25
-      },
-      headerTintColor: "#fff",
-      headerTitleStyle: {
-        fontWeight: "bold"
-      },
-      headerLeft: (
-        <SearchBar
-          containerStyle={{ width: ITEM_WIDTH }}
-          placeholder="Filter..."
-          lightTheme
-          onChangeText={navigation.getParam("increaseCount")}
-        />
-      )
-    };
+    return {}
   };
   constructor(props) {
     super(props);
@@ -74,6 +55,12 @@ export default class MyPlaceScreen extends React.Component {
     );
     return (
       <View style={styles.container}>
+       <SearchBar
+          containerStyle={{ width: ITEM_WIDTH }}
+          placeholder="Filter..."
+          lightTheme
+          onChangeText={navigation.getParam("increaseCount")}
+        />
         <ImageBackground style={ styles.imgBackground } 
       resizeMode='cover' 
       source={{uri:'https://images.unsplash.com/photo-1520405350075-ea8df9ae72a5?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=56df2db5de7d9fe47c39161937d88baf&auto=format&fit=crop&w=934&q=80'}}> 
@@ -126,11 +113,11 @@ const styles = StyleSheet.create({
     width: ITEM_WIDTH / 6,
     margin: 20,
     position: "absolute",
-    backgroundColor:'rgba(255,255,255,0.4)',
+    backgroundColor:'rgba(255,255,255,0.5)',
     borderRadius:50,
   },
   flatlist_view: {
-    backgroundColor:'rgba(255,255,255,0.5)',
+    backgroundColor:'rgba(255,255,255,0.7)',
     marginVertical: 2,
     borderRadius: 5,
     height: 50,

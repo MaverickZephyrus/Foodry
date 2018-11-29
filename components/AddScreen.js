@@ -6,9 +6,9 @@ const ITEM_HEIGHT = Dimensions.get("window").height;
 
 export default class AddScreen extends React.Component {
   
-  static navigationOptions = {
-    header: null
-  }
+  // static navigationOptions = {
+  //   header: null
+  // }
 
   constructor() {
     super();

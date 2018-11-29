@@ -6,7 +6,7 @@ export const test_data = [
         food_name: "Sushi",
         cost: "$8.99",
         restaurant: "Sushi Garden",
-        notes: "I love it for the user to search the list, we need to add a search bar on the top of the FlatList. FlatList has a prop to add any custom component to its header. I love it. ",
+        notes: "I love it for the user to search the list, we need to add a search bar on the top of the FlatList. FlatList has a prop to add any custom component to its header. I love it. I love it for the user to search the list, we need to add a search bar on the top of the FlatList. FlatList has a prop to add any custom component to its header. I love it. ",
         date: "Nov 15, 2018"
     },
     {

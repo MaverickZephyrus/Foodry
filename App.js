@@ -8,44 +8,13 @@ import MyPlaceScreen from './components/myplacescreen';
 import AddScreen from './components/AddScreen';
 import FoodDetails from './components/FoodDetails'
 
-//NOTE: 
-const MainStack = createStackNavigator(
-  {
-    Main: {
-      screen: MainScreen
-    },
-    },
-    {
-      initialRouteName: 'Main',
-       transitionConfig: () => fadeIn(),
-    }
-)
-
-const MyPlaceStack = createStackNavigator(
-  {
-    MyPlace: {
-      screen: MyPlaceScreen
-    },
-    AddScreen:{
-      screen: AddScreen
-    },
-    FoodDetails:{
-      screen: FoodDetails
-    }
-    },
-    {
-      initialRouteName: 'MyPlace',
-       transitionConfig: () => fadeIn(),
-    }
-)
-
 const RootTab = createMaterialTopTabNavigator(
   {
     'My Foodry': {
-      screen: MainStack
+      screen: MainScreen
     },
     'My Places': {
-      screen: MyPlaceStack
+      screen: MyPlaceScreen
     }
     },
     {
@@ -66,11 +35,34 @@ const RootTab = createMaterialTopTabNavigator(
       },
     }
 )
+const SuperStack = createStackNavigator(
+  {
+    Main: {
+      screen: RootTab,
+      navigationOptions: {
+        header:null
+      },
+    },
+     MyPlace: {
+      screen: MyPlaceScreen
+    },
+    AddScreen:{
+      screen: AddScreen
+    },
+    FoodDetails:{
+      screen: FoodDetails
+    }
+    },
+    {
+      initialRouteName: 'Main',
+      transitionConfig: () => fadeIn(),
+    }
+)
 
 
 export default class App extends React.Component {
   render() {
-    return <RootTab/>
+    return <SuperStack/>
   }
 }
 
