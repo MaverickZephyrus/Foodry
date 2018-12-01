@@ -7,6 +7,8 @@ import MainScreen from './components/mainscreen';
 import MyPlaceScreen from './components/myplacescreen';
 import AddScreen from './components/AddScreen';
 import FoodDetails from './components/FoodDetails'
+import AddPlace from './components/addplace'
+
 
 const RootTab = createMaterialTopTabNavigator(
   {
@@ -51,6 +53,9 @@ const SuperStack = createStackNavigator(
     },
     FoodDetails:{
       screen: FoodDetails
+    }, 
+    AddPlace:{
+      screen: AddPlace
     }
     },
     {
