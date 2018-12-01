@@ -20,7 +20,7 @@ export default class AddPlace extends React.Component {
 
     // hide top navigation bar
     static navigationOptions = {
-        header: null,
+        // header: null,
     };
 
     // search function using google places api
