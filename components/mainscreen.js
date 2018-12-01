@@ -19,17 +19,31 @@ import {SearchBar} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import IconM from 'react-native-vector-icons/MaterialIcons';
 import {test_data} from './test_data';
+
+// NOTE: Lines 24, 30, 42, 46, 201
+// Redux guide
+// import the following 3
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { loadFromAsyncStorage } from "../actions/DataActions";
+
+// Bind state and dispatch to MainScreen component in line 197
+// Use the function binded as this.props.loadFromAsyncStorage(param) in
+// whatever function you want to do in this component
+
 const ITEM_WIDTH = Dimensions.get("window").width;
 const ITEM_HEIGHT = Dimensions.get("window").height;
 
-export default class MainScreen extends React.Component {
+class MainScreen extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            data: test_data,
+            // data: test_data,
+            data: this.props.userData.currentData,
             column: 2,
             key: 1,
-            fullData: test_data,
+            // fullData: test_data,
+            fullData: this.props.userData.currentData,
             modalVisible: false,
             itemindex: '0',
             box1:'#000',
@@ -183,3 +197,18 @@ const styles = StyleSheet.create({
       flex: 1 
   },
 });
+
+// Bindings for redux
+const mapStateToProps = (state) => {
+    const { userData } = state;
+    return { userData }
+};
+
+const mapDispatchToProps = dispatch => (
+    bindActionCreators({
+        loadFromAsyncStorage,
+    }, dispatch)
+);
+
+export default connect(mapStateToProps, mapDispatchToProps)(MainScreen);
+// end of bindings
