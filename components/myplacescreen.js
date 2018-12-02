@@ -7,10 +7,10 @@ const ITEM_WIDTH = Dimensions.get("window").width;
 const ITEM_HEIGHT = Dimensions.get("window").height;
 import { test_data } from "./test_data";
 
-// UPDATE: changed i to i.toString() at line 87 because it was causing errors.
-//         keyExtractor expecting a string but you were giving it an int with i.
+// UPDATE: line 111 your rgba(0,0,0) was missing alpha.
+//         changed to rgba(0,0,0,1)
 
-// TODO:  - add Touch component to + button. set it to onPress={() => this.props.navigation.navigate('AddPlace')}
+// TODO:  - replace test data with redux state. refer to mainscreen for example.
 
 export default class MyPlaceScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
@@ -95,7 +95,7 @@ export default class MyPlaceScreen extends React.Component {
           style={styles.add_circle_icon}
           name="add-circle"
           size={ITEM_WIDTH / 6}
-          color='rgba(0, 0, 0)'
+          color='rgba(0, 0, 0, 1)'
           onPress={() => {
             this.props.navigation.navigate('AddPlace')
       }}
