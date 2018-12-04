@@ -73,7 +73,6 @@ class MainScreen extends React.Component {
         this.setState({itemindex: i});        
         this.setState({modalVisible: visible});
         this.setState({item_data: item});
-        console.log(item);
     }
 
     render() {
@@ -163,7 +162,7 @@ class MainScreen extends React.Component {
                                 <Text style={{ margin: 10 }}
                                     onPress={() => {
             this.setState({ modalVisible: false }),
-            this.props.navigation.navigate('Details')
+            this.props.navigation.navigate('Details', {'img' : this.state.item_data.img, 'food_name': this.state.item_data.food_name, 'cost': this.state.item_data.cost, 'notes': this.state.item_data.notes, 'restaurant': this.state.item_data.restaurant, 'date': this.state.item_data.date })
 
             }}>Go to Details... </Text>
 
