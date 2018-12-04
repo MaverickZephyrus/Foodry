@@ -151,7 +151,6 @@ class MainScreen extends React.Component {
                         <ScrollView contentContainerStyle={styles.modal}>
                                 <Icon style={styles.textx} name="close" size={25}  onPress={() => {this.setModalVisible(false, 0, [])}} color="#000" />
                                 
-                                <Image style={{flex:1, resizeMode: 'contain'}} source={{uri: this.state.item_data.img}}></Image>
                               
                                 <Text
                                     style={{
@@ -161,6 +160,13 @@ class MainScreen extends React.Component {
                                     <Bold>{this.state.item_data.food_name}</Bold> --- {this.state.item_data.cost} @ {this.state.item_data.restaurant} {"\n"} {"\n"} " {this.state.item_data.notes} " 
                                 </Text>
                                 <Text style={{ margin: 10, fontSize:11, color:'grey'}}>{this.state.item_data.date} </Text>
+                                <Text style={{ margin: 10 }}
+                                    onPress={() => {
+            this.setState({ modalVisible: false }),
+            this.props.navigation.navigate('Details')
+
+            }}>Go to Details... </Text>
+
                         </ScrollView>
                         </BlurView>
                         </TouchableWithoutFeedback>
@@ -174,6 +180,8 @@ class MainScreen extends React.Component {
 
     }
 
+
+
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "#fff",
@@ -181,8 +189,8 @@ const styles = StyleSheet.create({
     flex:1
   },
     modal: {
-        height: ITEM_HEIGHT/2,
-        width: ITEM_WIDTH-ITEM_WIDTH/10,
+        height: ITEM_HEIGHT/1.50,
+        width: ITEM_WIDTH-ITEM_WIDTH/15,
         backgroundColor: 'white',
         borderRadius:10,
         marginTop: ITEM_WIDTH/2
