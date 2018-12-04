@@ -17,8 +17,7 @@ import {
 import _ from 'lodash';
 import {SearchBar} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import IconM from 'react-native-vector-icons/MaterialIcons';
-import {test_data} from './test_data';
+
 import { BlurView } from 'expo';
 
 // NOTE: Lines 24, 30, 42, 46, 201
@@ -39,12 +38,11 @@ class MainScreen extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            // data: test_data,
-            data: this.props.userData.currentData,
+            raw_data: this.props.userData.currentData,
+            data: [],
             column: 2,
             key: 1,
-            // fullData: test_data,
-            fullData: this.props.userData.currentData,
+            fullData: [],
             modalVisible: false,
             itemindex: '0',
             box1:'#000',
@@ -57,16 +55,34 @@ class MainScreen extends React.Component {
         return{}
     };
     componentDidMount() {
+        this._parserawdata();
         this.props.navigation.setParams({ increaseCount: this._handleSearch });
       }
 
     _handleSearch = (text) =>{
     const data = _.filter(this.state.fullData, (lc) =>
-    {return lc.restaurant.toLowerCase().indexOf(text.toLowerCase()) != -1 || lc.food_name.toLowerCase().indexOf(text.toLowerCase()) != -1 || lc.cost.toLowerCase().indexOf(text.toLowerCase()) != -1})
+    {return lc.restaurant.toLowerCase().indexOf(text.toLowerCase()) != -1 || lc.food_name.toLowerCase().indexOf(text.toLowerCase()) != -1 || lc.price.toLowerCase().indexOf(text.toLowerCase()) != -1})
         this.setState({
             data: data
         });
     
+    };
+
+    _parserawdata(){
+        const raw = this.state.raw_data
+        const parsedata = []
+        raw.map((single) => {
+            single.foods.map((s) =>{
+                s['restaurant'] = single.restaurant
+            })
+            parsedata.push(single.foods)
+        });
+        var result = [].concat.apply([], parsedata);
+        this.setState({
+            data: result,
+            fullData: result
+        });
+
     };
 
     setModalVisible(visible, i, item) {
@@ -107,7 +123,6 @@ class MainScreen extends React.Component {
         </View>
         </TouchableWithoutFeedback>
         </View>
-
             <FlatList
                 data={this.state.data}
                 keyExtractor={(x, i) => i}
@@ -133,7 +148,7 @@ class MainScreen extends React.Component {
                                     textAlign:'center'
                                 }}
                                 >
-                                <Bold>{item.food_name}</Bold> --- {item.cost} {"\n"}@ {item.restaurant}
+                                <Bold>{item.food_name}</Bold> --- {item.price} {"\n"}@ {item.restaurant}
                                 </Text>
                         </View>
                         </TouchableHighlight>

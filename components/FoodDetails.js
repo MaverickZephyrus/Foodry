@@ -13,8 +13,8 @@ export default class FoodDetails extends React.Component {
     // }
 
     state = {
-        data: test_data,
-        fulldata: test_data
+        data: [],
+        fulldata: [],
     }
     componentDidMount() {
         this._specificplace();
@@ -22,13 +22,17 @@ export default class FoodDetails extends React.Component {
     
     _specificplace = () => {
     const { navigation } = this.props;
-    const location = navigation.getParam('location', 'NO LOCATION');
+    const location = navigation.getParam('address', 'NO LOCATION');
     const restaurant = navigation.getParam('restaurant', 'NO RESTAURANT');
-    var place = _.filter(this.state.data, {'location' : location, 'restaurant': restaurant });
+    const data = navigation.getParam('data', 'NO DATA');
+    console.log(location)
+    console.log(restaurant)
+    console.log(data)
     this.setState({
-        data: place,
-        fullData: place
+        data: data,
+        fullData: data
     });
+    console.log(this.state.data)
     };
 
     render() {
@@ -36,21 +40,21 @@ export default class FoodDetails extends React.Component {
         return(
             <View style={styles.container}>
                 <View style={styles.restHeader}>
-                    <Text style={styles.restInfo}>{this.state.data[0].restaurant}</Text>
-                    <Text style={styles.restInfo}>{this.state.data[0].location}</Text>
+                    {/* <Text style={styles.restInfo}>{this.state.data[0].restaurant}</Text> */}
+                    {/* <Text style={styles.restInfo}>{this.state.data}</Text> */}
                     <Text style={styles.restInfo}>N/A</Text>
                     <Text style={styles.restInfo}>N/A</Text>
                 </View>
 
-                <FlatList 
+                {/* <FlatList 
                     data={this.state.data}
                     renderItem={({ item }) => (
                         <View style={styles.listItems}>
                             <Image source={{uri: item.img}} style={styles.pic}/>
-                            <Text style={{marginLeft: 2, textAlign: 'center', justifyContent:'center'}}><Bold>{item.food_name}</Bold> --- {item.cost}</Text>
+                            <Text style={{marginLeft: 2, textAlign: 'center', justifyContent:'center'}}><Bold>{item}</Bold> --- {item.price}</Text>
                         </View>
                     )}
-                />
+                /> */}
                 <IconM
           style={styles.add_circle_icon}
           name="add-circle"
