@@ -4,6 +4,7 @@
 const appState = {
     currentData: [
         {
+
           id: 'sus4l3',
           address: "4635 Kingsway, Burnaby, BC V5H 4L3",
           restaurant: "Sushi Garden",
@@ -28,6 +29,7 @@ const appState = {
             }
           ]
         }
+
     ]
 }
 

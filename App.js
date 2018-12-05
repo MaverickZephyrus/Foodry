@@ -6,8 +6,9 @@ import { fadeIn } from 'react-navigation-transitions';
 import MainScreen from './components/mainscreen';
 import MyPlaceScreen from './components/myplacescreen';
 import AddScreen from './components/AddScreen';
-import FoodDetails from './components/FoodDetails'
-import AddPlace from './components/addplace'
+import FoodDetails from './components/FoodDetails';
+import AddPlace from './components/addplace';
+import Details from './components/Details';
 
 // NOTE: Lines 13, 18, and 84
 // Redux related imports
@@ -64,8 +65,11 @@ const SuperStack = createStackNavigator(
     }, 
     AddPlace:{
       screen: AddPlace
-    }
     },
+    Details: {
+      screen: Details
+    }
+  },
     {
       initialRouteName: 'Main',
       transitionConfig: () => fadeIn(),
