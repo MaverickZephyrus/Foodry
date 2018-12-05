@@ -49,7 +49,7 @@ class MainScreen extends React.Component {
             itemindex: '0',
             box1:'#000',
             box2:'#606060',
-            item_data: []
+            item_data: { 'notes' : 'empty'}
         }
     }
 
@@ -70,16 +70,24 @@ class MainScreen extends React.Component {
     };
 
     setModalVisible(visible, i, item) {
-        this.setState({itemindex: i});        
+        this.setState({itemindex: i});       
+        this.setState({item_data: item}); 
         this.setState({modalVisible: visible});
-        this.setState({item_data: item});
-    }
+        console.log(i);
+
+    };
+
+    stringTruncate(str, length) {
+        var dots = str.length > length ? '...' : '';
+        return str.substring(0, length) + dots;
+    };
 
     render() {
 
         const { column, key } = this.state;
         const { navigation } = this.props;
         const Bold = (props) => <Text style={{fontWeight: 'bold'}}>{props.children}</Text>
+
         return (
             <View style={styles.container}>
             <SearchBar containerStyle={{width: ITEM_WIDTH}} placeholder="Filter..." lightTheme onChangeText={navigation.getParam('increaseCount')}/> 
@@ -106,6 +114,7 @@ class MainScreen extends React.Component {
         </View>
         </TouchableWithoutFeedback>
         </View>
+
 
             <FlatList
                 data={this.state.data}
@@ -138,26 +147,35 @@ class MainScreen extends React.Component {
                         </TouchableHighlight>
                     )}
             />
+
+
                 <Modal animationType={'fade'}
                     transparent={true} visible={this.state.modalVisible}
                     onRequestClose={() => {}}>
                         <TouchableWithoutFeedback onPress={() => {
             this.setState({ modalVisible: false });
         }}>
-                     <BlurView  tint="dark" intensity={60} style={{   flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'}}>
+                     <BlurView  tint="dark" intensity={60} style={{   flex: 1, justifyContent: 'center', alignItems: 'center'}}>
                         <ScrollView contentContainerStyle={styles.modal}>
-                                <Icon style={styles.textx} name="close" size={25}  onPress={() => {this.setModalVisible(false, 0, [])}} color="#000" />
+                                <Icon style={styles.textx} name="close" size={25}  onPress={() => {this.setModalVisible(false, 0, { 'notes' : 'empty'})}} color="#000" />
                                 
-                              
+
+
                                 <Text
                                     style={{
                                         margin: 10,
                                     }}
                                     >
-                                    <Bold>{this.state.item_data.food_name}</Bold> --- {this.state.item_data.cost} @ {this.state.item_data.restaurant} {"\n"} {"\n"} " {this.state.item_data.notes} " 
+
+                                    <Bold>{this.state.item_data.food_name}</Bold> --- {this.state.item_data.cost} @ {this.state.item_data.restaurant} {"\n"} {"\n"} " {this.stringTruncate(this.state.item_data.notes, 200)} " 
                                 </Text>
+
+
+
+
+
+
+
                                 <Text style={{ margin: 10, fontSize:11, color:'grey'}}>{this.state.item_data.date} </Text>
                                 <Text style={{ margin: 10 }}
                                     onPress={() => {

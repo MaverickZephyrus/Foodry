@@ -45,24 +45,23 @@ export default class Details extends React.Component {
 
         return (
             <View style={styles.container}>
-                <ScrollView contentContainerStyle={styles.detailscreen}>
 
-                        {/*data={this.state.searchResult}; */}
+                <Image style={{flex: 1, width: width, height: height/2}} source={{uri: this.state.searchResult.img}}></Image>
 
-                        <Image style={{flex: 1}} source={{uri: this.state.searchResult.img}}></Image>
+                <View style={styles.detailbox}>
+                    <ScrollView>
+                            <Text
+                              style={{
+                                  margin: 10,
+                              }}> 
+                            <Bold>{this.state.searchResult.food_name}</Bold> --- {this.state.searchResult.cost} {"\n"}@ {this.state.searchResult.restaurant} {"\n"} {"\n"} " {this.state.searchResult.notes} " 
+                            
+                            </Text>
 
+                          <Text style={{ margin: 10, fontSize:11, color:'grey'}}>{this.state.searchResult.date} </Text>
 
-                        <Text
-                          style={{
-                              margin: 10,
-                          }}> 
-                        <Bold>{this.state.searchResult.food_name}</Bold> --- {this.state.searchResult.cost} {"\n"}@ {this.state.searchResult.restaurant} {"\n"} {"\n"} " {this.state.searchResult.notes} " 
-                        
-                        </Text>
-
-                      <Text style={{ margin: 10, fontSize:11, color:'grey'}}>{this.state.searchResult.date} </Text>
-
-                </ScrollView>
+                    </ScrollView>
+                </View>
             </View>
         )
     }
@@ -77,11 +76,12 @@ const styles = StyleSheet.create({
         paddingBottom: height/10
     },
     
-    detailscreen: {
+
+    detailbox: {
         backgroundColor: 'rgba(0,0,0,0)',
         width: width,
-        height: height,
-    },
+        height: height/2,
+    }
 })
 
 

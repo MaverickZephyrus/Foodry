@@ -4,8 +4,7 @@
 const appState = {
     currentData: [
         {
-            img:
-                "https://img.grouponcdn.com/deal/fmPws6o2uTweCftZu7yj/p4-2048x1229/v1/c700x420.jpg",
+            img:"https://img.grouponcdn.com/deal/fmPws6o2uTweCftZu7yj/p4-2048x1229/v1/c700x420.jpg",
             location: "4635 Kingsway, Burnaby, BC V5H 4L3",
             food_name: "Sushi",
             cost: "$8.99",
