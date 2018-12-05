@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, View, Dimensions, Text, FlatList, Button, TouchableHighlight, Modal,
     StatusBar, TextInput, Image, ImageBackground, Alert } from "react-native";
-import { API_KEY } from '../assets/apikey';
+import { API_KEY } from '../apikey/apikey';
 
 // TODO:    - integrate google places api for results
 //          - add modal view as preview before adding place
