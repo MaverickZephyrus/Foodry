@@ -47,6 +47,3 @@ export const DataReducer = (state = appState, action) => {
             return state
     }
 }
-
-// NOTE TO TRAVIS: ADD THIS LINE WHEN SAVING TO ASYNCSTORAGE AFTER ADDING FOOD
-// AsyncStorage.setItem('userData', JSON.stringify(currentData));
