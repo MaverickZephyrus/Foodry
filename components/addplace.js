@@ -80,9 +80,11 @@ export class AddPlace extends React.Component {
         };
         this.props.addPlace(resto);
         console.log(this.props.userData.currentData[0].id);
-        if (this.props.userData.currentData[0].id == id) {
-            this.props.navigation.goBack();
-        }
+        // if (this.props.userData.currentData[0].id == id) {
+        //     this.props.navigation.goBack();
+        // }
+        this.setState({ modalShow: false })
+        this.props.navigation.push('Main')
     }
 
 

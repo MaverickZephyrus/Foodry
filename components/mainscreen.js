@@ -153,7 +153,7 @@ class MainScreen extends React.Component {
     _parserawdata(){
         const raw = this.props.userData.currentData;
         const parsedata = []
-        console.log(raw)
+        // console.log(raw)
         raw.map((single) => {
             single.foods.map((s) =>{
                 s['restaurant'] = single.restaurant
@@ -163,6 +163,9 @@ class MainScreen extends React.Component {
         });
         // console.log(parsedata)
         var result = [].concat.apply([], parsedata);
+        var result = result.filter(
+            (set => u => !set.has(u.notes) && set.add(u.notes))(new Set())
+          );
         this.setState({
             data: result,
             fullData: result
@@ -174,7 +177,7 @@ class MainScreen extends React.Component {
         this.setState({itemindex: i});       
         this.setState({item_data: item}); 
         this.setState({modalVisible: visible});
-        console.log(i);
+        // console.log(i);
 
     };
 

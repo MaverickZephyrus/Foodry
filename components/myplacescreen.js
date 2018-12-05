@@ -79,7 +79,7 @@ class MainScreen extends React.Component {
         var unique = raw.filter(
           (set => u => !set.has(u.address) && set.add(u.address))(new Set())
         );
-        console.log(unique)
+        // console.log(unique)
         this.setState({
             data: unique,
             fullData: unique,

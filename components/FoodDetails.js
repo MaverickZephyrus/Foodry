@@ -63,7 +63,9 @@ class MainScreen extends React.Component {
         let restaurant = this.props.navigation.getParam('restaurant', 'NO DATA');
         var raw1 = _.filter(raw, {'restaurant': restaurant });
         var place = _.filter(data, {'restaurant': restaurant });
-        console.log(data)
+        var place = place.filter(
+            (set => u => !set.has(u.notes) && set.add(u.notes))(new Set())
+          );
         const { column, key } = this.state;
         const { navigation } = this.props;
         const Bold = (props) => <Text style={{fontWeight: 'bold'}}>{props.children}</Text>
@@ -99,7 +101,7 @@ class MainScreen extends React.Component {
           size={ITEM_WIDTH / 6}
           color='rgba(0, 0, 0, 1)'
           onPress={() => {
-            this.props.navigation.navigate('AddScreen', { 'data': raw1 })
+            this.props.navigation.navigate('AddScreen', { 'data': raw1, 'data1': data, 'data2': raw })
       }}
         />
         </ImageBackground>
