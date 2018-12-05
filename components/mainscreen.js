@@ -12,13 +12,13 @@ import {
   Modal,
   ScrollView,
   StatusBar,
-  ImageBackground
+  ImageBackground,
+  AsyncStorage
 } from "react-native";
 import _ from 'lodash';
 import {SearchBar} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import IconM from 'react-native-vector-icons/MaterialIcons';
-import {test_data} from './test_data';
+
 import { BlurView } from 'expo';
 
 // NOTE: Lines 24, 30, 42, 46, 201
@@ -39,48 +39,142 @@ class MainScreen extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            // data: test_data,
-            data: this.props.userData.currentData,
+            raw_data: this.props.userData.currentData,
+            data: [],
             column: 2,
             key: 1,
-            // fullData: test_data,
-            fullData: this.props.userData.currentData,
+            fullData: [],
             modalVisible: false,
             itemindex: '0',
             box1:'#000',
             box2:'#606060',
-            item_data: []
+            item_data: { 'notes' : 'empty'}
         }
     }
 
     static navigationOptions = ({ navigation }) => {
         return{}
     };
+
+   
     componentDidMount() {
+        this._parserawdata();
         this.props.navigation.setParams({ increaseCount: this._handleSearch });
+        this._loadAsyncStorage();
       }
+
+      _loadAsyncStorage = async() => {
+        let data = [
+            {
+              address: "4635 Kingsway, dfsafdaBurnaby, BC V5H 4L3",
+              restaurant: "Sushi Gdsafarden",
+              foods: [
+                {
+                  food_name: "Sushi",
+                  img:
+                        "https://static1.squarespace.com/static/5849a1775016e1094e1d0763/t/5849ddc1197aeaa33558470e/1481235920269/2016-01-Sushi-plate.jpg?format=1500w",
+                  price: "$15.99",
+                  notes:
+                    "I love it for the user to search the list, we need to add a search bar on the top of the FlatList. FlatList has a prop to add any custom component to its header. I love it.",
+                  date: "Nov 15, 2018",
+                  phone:'604-648-4384'
+                },
+                {
+                  food_name: "Pizza",
+                  img:
+                        "https://static1.squarespace.com/static/5849a1775016e1094e1d0763/t/5849ddc1197aeaa33558470e/1481235920269/2016-01-Sushi-plate.jpg?format=1500w",
+                  price: "$8.99",
+                  notes:
+                    "I love it for the user to search the list, we need to add a search bar on the top of the FlatList. FlatList has a prop to add any custom component to its header. I love it.",
+                  date: "Nov 15, 2018",
+                  phone:'604-648-4384'
+                }
+              ]
+            },
+            {
+                address: "4635 Kingsway, Burnaby, BC V5H 4L3",
+                restaurant: "Sushi Garden",
+                foods: [
+                  {
+                    food_name: "Sushi",
+                    img:
+                          "https://static1.squarespace.com/static/5849a1775016e1094e1d0763/t/5849ddc1197aeaa33558470e/1481235920269/2016-01-Sushi-plate.jpg?format=1500w",
+                    price: "$15.99",
+                    notes:
+                      "I love it for the user to search the list, we need to add a search bar on the top of the FlatList. FlatList has a prop to add any custom component to its header. I love it.",
+                    date: "Nov 15, 2018",
+                    phone:'604-648-4384'
+                  },
+                  {
+                    food_name: "Sushi",
+                    img:
+                          "https://static1.squarespace.com/static/5849a1775016e1094e1d0763/t/5849ddc1197aeaa33558470e/1481235920269/2016-01-Sushi-plate.jpg?format=1500w",
+                    price: "$8.99",
+                    notes:
+                      "I love it for the user to search the list, we need to add a search bar on the top of the FlatList. FlatList has a prop to add any custom component to its header. I love it.",
+                    date: "Nov 15, 2018",
+                  phone:'604-648-4384'
+        
+                  }
+                ]
+              }
+          ];
+
+        let test = await AsyncStorage.get('userData');
+        if (test == undefined) {
+            console.log(test);
+        } else {
+            console.log('Not undefined');
+            console.log(test);
+        }
+    }
+
 
     _handleSearch = (text) =>{
     const data = _.filter(this.state.fullData, (lc) =>
-    {return lc.restaurant.toLowerCase().indexOf(text.toLowerCase()) != -1 || lc.food_name.toLowerCase().indexOf(text.toLowerCase()) != -1 || lc.cost.toLowerCase().indexOf(text.toLowerCase()) != -1})
+    {return lc.restaurant.toLowerCase().indexOf(text.toLowerCase()) != -1 || lc.food_name.toLowerCase().indexOf(text.toLowerCase()) != -1 || lc.price.toLowerCase().indexOf(text.toLowerCase()) != -1})
         this.setState({
             data: data
         });
     
     };
 
+    _parserawdata(){
+        const raw = this.state.raw_data
+        const parsedata = []
+        raw.map((single) => {
+            single.foods.map((s) =>{
+                s['restaurant'] = single.restaurant
+            })
+            parsedata.push(single.foods)
+        });
+        var result = [].concat.apply([], parsedata);
+        this.setState({
+            data: result,
+            fullData: result
+        });
+
+    };
+
     setModalVisible(visible, i, item) {
-        this.setState({itemindex: i});        
+        this.setState({itemindex: i});       
+        this.setState({item_data: item}); 
         this.setState({modalVisible: visible});
-        this.setState({item_data: item});
-        console.log(item);
-    }
+        console.log(i);
+
+    };
+
+    stringTruncate(str, length) {
+        var dots = str.length > length ? '...' : '';
+        return str.substring(0, length) + dots;
+    };
 
     render() {
 
         const { column, key } = this.state;
         const { navigation } = this.props;
         const Bold = (props) => <Text style={{fontWeight: 'bold'}}>{props.children}</Text>
+
         return (
             <View style={styles.container}>
             <SearchBar containerStyle={{width: ITEM_WIDTH}} placeholder="Filter..." lightTheme onChangeText={navigation.getParam('increaseCount')}/> 
@@ -107,7 +201,6 @@ class MainScreen extends React.Component {
         </View>
         </TouchableWithoutFeedback>
         </View>
-
             <FlatList
                 data={this.state.data}
                 keyExtractor={(x, i) => i}
@@ -133,34 +226,49 @@ class MainScreen extends React.Component {
                                     textAlign:'center'
                                 }}
                                 >
-                                <Bold>{item.food_name}</Bold> --- {item.cost} {"\n"}@ {item.restaurant}
+                                <Bold>{item.food_name}</Bold> --- {item.price} {"\n"}@ {item.restaurant}
                                 </Text>
                         </View>
                         </TouchableHighlight>
                     )}
             />
+
+
                 <Modal animationType={'fade'}
                     transparent={true} visible={this.state.modalVisible}
                     onRequestClose={() => {}}>
                         <TouchableWithoutFeedback onPress={() => {
             this.setState({ modalVisible: false });
         }}>
-                     <BlurView  tint="dark" intensity={60} style={{   flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'}}>
+                     <BlurView  tint="dark" intensity={60} style={{   flex: 1, justifyContent: 'center', alignItems: 'center'}}>
                         <ScrollView contentContainerStyle={styles.modal}>
-                                <Icon style={styles.textx} name="close" size={25}  onPress={() => {this.setModalVisible(false, 0, [])}} color="#000" />
+                                <Icon style={styles.textx} name="close" size={25}  onPress={() => {this.setModalVisible(false, 0, { 'notes' : 'empty'})}} color="#000" />
                                 
                                 <Image style={{flex:1, resizeMode: 'contain'}} source={{uri: this.state.item_data.img}}></Image>
-                              
+
                                 <Text
                                     style={{
                                         margin: 10,
                                     }}
                                     >
-                                    <Bold>{this.state.item_data.food_name}</Bold> --- {this.state.item_data.cost} @ {this.state.item_data.restaurant} {"\n"} {"\n"} " {this.state.item_data.notes} " 
+
+                                    <Bold>{this.state.item_data.food_name}</Bold> --- {this.state.item_data.cost} @ {this.state.item_data.restaurant} {"\n"} {"\n"} " {this.stringTruncate(this.state.item_data.notes, 200)} " 
                                 </Text>
+
+
+
+
+
+
+
                                 <Text style={{ margin: 10, fontSize:11, color:'grey'}}>{this.state.item_data.date} </Text>
+                                <Text style={{ margin: 10 }}
+                                    onPress={() => {
+            this.setState({ modalVisible: false }),
+            this.props.navigation.navigate('Details', {'img' : this.state.item_data.img, 'food_name': this.state.item_data.food_name, 'cost': this.state.item_data.cost, 'notes': this.state.item_data.notes, 'restaurant': this.state.item_data.restaurant, 'date': this.state.item_data.date })
+
+            }}>Go to Details... </Text>
+
                         </ScrollView>
                         </BlurView>
                         </TouchableWithoutFeedback>
@@ -174,6 +282,8 @@ class MainScreen extends React.Component {
 
     }
 
+
+
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "#fff",
@@ -181,8 +291,8 @@ const styles = StyleSheet.create({
     flex:1
   },
     modal: {
-        height: ITEM_HEIGHT/2,
-        width: ITEM_WIDTH-ITEM_WIDTH/10,
+        height: ITEM_HEIGHT/1.50,
+        width: ITEM_WIDTH-ITEM_WIDTH/15,
         backgroundColor: 'white',
         borderRadius:10,
         marginTop: ITEM_WIDTH/2
