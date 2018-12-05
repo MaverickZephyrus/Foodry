@@ -1,60 +1,82 @@
 import React from "react";
-import { StyleSheet, View, Dimensions, Text, Image, FlatList } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Image,
+  Dimensions,
+  Text,
+  FlatList, 
+  Button,
+  TouchableWithoutFeedback,
+  TouchableHighlight,
+  Modal,
+  ScrollView,
+  StatusBar,
+  ImageBackground,
+  AsyncStorage
+} from "react-native";
+import _ from 'lodash';
+import {SearchBar} from 'react-native-elements';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+
+import { BlurView } from 'expo';
+import IconM from 'react-native-vector-icons/MaterialIcons';
+
+
+// NOTE: Lines 24, 30, 42, 46, 201
+// Redux guide
+// import the following 3
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { loadFromAsyncStorage } from "../actions/DataActions";
+
+// Bind state and dispatch to MainScreen component in line 197
+// Use the function binded as this.props.loadFromAsyncStorage(param) in
+// whatever function you want to do in this component
+global.something = 10;
 const ITEM_WIDTH = Dimensions.get("window").width;
 const ITEM_HEIGHT = Dimensions.get("window").height;
-import IconM from "react-native-vector-icons/MaterialIcons";
-import { test_data } from "./test_data";
-import _ from "lodash";
 
-export default class FoodDetails extends React.Component {
 
-    // static navigationOptions = {
-    //     header: null,    
-    // }
-
-    state = {
-        data: [],
-        fulldata: [],
+class MainScreen extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            raw_data: this.props.userData.currentData,
+            data: [],
+            fullData: [],
+        }
     }
-    componentDidMount() {
-        this._specificplace();
-      }
-    
-    _specificplace = () => {
-    const { navigation } = this.props;
-    const location = navigation.getParam('address', 'NO LOCATION');
-    const restaurant = navigation.getParam('restaurant', 'NO RESTAURANT');
-    const data = navigation.getParam('data', 'NO DATA');
-    console.log(location)
-    console.log(restaurant)
-    console.log(data)
-    this.setState({
-        data: data,
-        fullData: data
-    });
-    console.log(this.state.data)
+
+    static navigationOptions = ({ navigation }) => {
+        return{}
     };
 
     render() {
+        let data = this.props.navigation.getParam('data', 'NO DATA');
+        let restaurant = this.props.navigation.getParam('restaurant', 'NO DATA');
+        var place = _.filter(data, {'restaurant': restaurant });
+        const { column, key } = this.state;
+        const { navigation } = this.props;
         const Bold = (props) => <Text style={{fontWeight: 'bold'}}>{props.children}</Text>
-        return(
+        return (
             <View style={styles.container}>
                 <View style={styles.restHeader}>
-                    {/* <Text style={styles.restInfo}>{this.state.data[0].restaurant}</Text> */}
-                    {/* <Text style={styles.restInfo}>{this.state.data}</Text> */}
-                    <Text style={styles.restInfo}>N/A</Text>
+                    <Text style={styles.restInfo}>{place[0].restaurant}</Text>
+                    <Text style={styles.restInfo}>{place[0].address}</Text>
+                    <Text style={styles.restInfo}>{place[0].phone}</Text>
                     <Text style={styles.restInfo}>N/A</Text>
                 </View>
 
-                {/* <FlatList 
-                    data={this.state.data}
+                <FlatList 
+                    data={place}
                     renderItem={({ item }) => (
                         <View style={styles.listItems}>
                             <Image source={{uri: item.img}} style={styles.pic}/>
-                            <Text style={{marginLeft: 2, textAlign: 'center', justifyContent:'center'}}><Bold>{item}</Bold> --- {item.price}</Text>
+                            <Text style={{marginLeft: 2, textAlign: 'center', justifyContent:'center'}}><Bold>{item.food_name}</Bold> --- {item.price}</Text>
                         </View>
                     )}
-                /> */}
+                />
                 <IconM
           style={styles.add_circle_icon}
           name="add-circle"
@@ -65,16 +87,17 @@ export default class FoodDetails extends React.Component {
       }}
         />
             </View>
-        )       
+        );
+        }
+
     }
-}
 
 const styles = StyleSheet.create({
     container: {
         backgroundColor: "#fff",
         justifyContent: "center",
         flex: 1
-      },
+        },
     restHeader: {
         height:ITEM_HEIGHT/4, 
         justifyContent:'space-evenly',
@@ -109,5 +132,20 @@ const styles = StyleSheet.create({
         position: "absolute",
         backgroundColor:'rgba(255,255,255,0.4)',
         borderRadius:50,
-      },
+        },
 });
+
+// Bindings for redux
+const mapStateToProps = (state) => {
+    const { userData } = state;
+    return { userData }
+};
+
+const mapDispatchToProps = dispatch => (
+    bindActionCreators({
+        loadFromAsyncStorage,
+    }, dispatch)
+);
+
+export default connect(mapStateToProps, mapDispatchToProps)(MainScreen);
+// end of bindings

@@ -12,7 +12,8 @@ import {
   Modal,
   ScrollView,
   StatusBar,
-  ImageBackground
+  ImageBackground,
+  AsyncStorage
 } from "react-native";
 import _ from 'lodash';
 import {SearchBar} from 'react-native-elements';
@@ -54,10 +55,80 @@ class MainScreen extends React.Component {
     static navigationOptions = ({ navigation }) => {
         return{}
     };
+
+   
     componentDidMount() {
         this._parserawdata();
         this.props.navigation.setParams({ increaseCount: this._handleSearch });
+        this._loadAsyncStorage();
       }
+
+      _loadAsyncStorage = async() => {
+        let data = [
+            {
+              address: "4635 Kingsway, dfsafdaBurnaby, BC V5H 4L3",
+              restaurant: "Sushi Gdsafarden",
+              foods: [
+                {
+                  food_name: "Sushi",
+                  img:
+                        "https://static1.squarespace.com/static/5849a1775016e1094e1d0763/t/5849ddc1197aeaa33558470e/1481235920269/2016-01-Sushi-plate.jpg?format=1500w",
+                  price: "$15.99",
+                  notes:
+                    "I love it for the user to search the list, we need to add a search bar on the top of the FlatList. FlatList has a prop to add any custom component to its header. I love it.",
+                  date: "Nov 15, 2018",
+                  phone:'604-648-4384'
+                },
+                {
+                  food_name: "Pizza",
+                  img:
+                        "https://static1.squarespace.com/static/5849a1775016e1094e1d0763/t/5849ddc1197aeaa33558470e/1481235920269/2016-01-Sushi-plate.jpg?format=1500w",
+                  price: "$8.99",
+                  notes:
+                    "I love it for the user to search the list, we need to add a search bar on the top of the FlatList. FlatList has a prop to add any custom component to its header. I love it.",
+                  date: "Nov 15, 2018",
+                  phone:'604-648-4384'
+                }
+              ]
+            },
+            {
+                address: "4635 Kingsway, Burnaby, BC V5H 4L3",
+                restaurant: "Sushi Garden",
+                foods: [
+                  {
+                    food_name: "Sushi",
+                    img:
+                          "https://static1.squarespace.com/static/5849a1775016e1094e1d0763/t/5849ddc1197aeaa33558470e/1481235920269/2016-01-Sushi-plate.jpg?format=1500w",
+                    price: "$15.99",
+                    notes:
+                      "I love it for the user to search the list, we need to add a search bar on the top of the FlatList. FlatList has a prop to add any custom component to its header. I love it.",
+                    date: "Nov 15, 2018",
+                    phone:'604-648-4384'
+                  },
+                  {
+                    food_name: "Sushi",
+                    img:
+                          "https://static1.squarespace.com/static/5849a1775016e1094e1d0763/t/5849ddc1197aeaa33558470e/1481235920269/2016-01-Sushi-plate.jpg?format=1500w",
+                    price: "$8.99",
+                    notes:
+                      "I love it for the user to search the list, we need to add a search bar on the top of the FlatList. FlatList has a prop to add any custom component to its header. I love it.",
+                    date: "Nov 15, 2018",
+                  phone:'604-648-4384'
+        
+                  }
+                ]
+              }
+          ];
+
+        let test = await AsyncStorage.get('userData');
+        if (test == undefined) {
+            console.log(test);
+        } else {
+            console.log('Not undefined');
+            console.log(test);
+        }
+    }
+
 
     _handleSearch = (text) =>{
     const data = _.filter(this.state.fullData, (lc) =>

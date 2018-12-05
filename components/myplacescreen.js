@@ -43,7 +43,8 @@ class MainScreen extends React.Component {
             column: 1,
             key: 1,
             query: "",
-            fullData: []
+            fullData: [],
+            foodDetail: []
         }
     }
 
@@ -80,7 +81,8 @@ class MainScreen extends React.Component {
         );
         this.setState({
             data: unique,
-            fullData: unique
+            fullData: unique,
+            foodDetail: result
         });
 
     };
@@ -115,8 +117,9 @@ class MainScreen extends React.Component {
                       textAlign: "center"
                     }}
                     onPress={() => {
+                      this._
                       this.props.navigation.navigate('FoodDetails',{
-                        address: item.address, restaurant: item.restaurant, data: this.state.fullData})
+                        address: item.address, restaurant: item.restaurant, data: this.state.foodDetail})
                 }}
                   >
                     <Bold>{item.restaurant}</Bold> {"\n"}@ {item.address}
