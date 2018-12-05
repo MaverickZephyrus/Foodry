@@ -27,9 +27,16 @@ export const DataReducer = (state = appState, action) => {
 
         case 'SAVE_TO_ASYNCSTORAGE':
 
-            console.log(currentData)
+            for(var i = 0; i < currentData.length; i++) {
+                if (currentData[i].id === action.payload[0]) {
+                    console.log('match')
+                    currentData[i].foods.push(action.payload[1])
+                } else {
+                    console.log('no match')
+                }
+            }
 
-            currentData[0].foods.push(action.payload)
+            console.log(currentData)
 
             return state
         
