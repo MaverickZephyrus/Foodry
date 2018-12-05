@@ -57,6 +57,11 @@ class AddScreen extends React.Component {
     }
   };
 
+  _saveBut = async (id, newFood) => {
+    this.props.saveToAsyncStorage(id, newFood)
+    this.props.navigation.navigate('MyPlace')
+  }
+
   render() {
       let restData = this.props.navigation.getParam('data', 'NO DATA');
       let {image} = this.state;
@@ -135,7 +140,7 @@ class AddScreen extends React.Component {
            <View style={{flexDirection:'row', padding: 20}}>
            <TouchableHighlight 
            style={styles.saveButton}
-           onPress={()=>this.props.saveToAsyncStorage(restData[0].id, this.state.food)}
+           onPress={() => {this._saveBut(restData[0].id, this.state.food)}}
            underlayColor="white"
            >
             <Text>Save</Text>
