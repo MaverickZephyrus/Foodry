@@ -66,7 +66,7 @@ class MainScreen extends React.Component {
     };
     
     _parserawdata(){
-        const raw = this.state.raw_data
+        const raw = this.props.userData.currentData
         const parsedata = []
         raw.map((single) => {
             single.foods.map((s) =>{
