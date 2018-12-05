@@ -76,8 +76,18 @@ export const DataReducer = (state = appState, action) => {
 
       return state;
 
-    // default return when no case is used
-    default:
-      return state;
-  }
-};
+            return state
+
+        case 'SAVE_TO_ASYNCSTORAGE':
+
+            console.log(currentData)
+
+            currentData[0].foods.push(action.payload)
+
+            return state
+        
+        // default return when no case is used
+        default:
+            return state
+    }
+}

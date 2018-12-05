@@ -4,17 +4,30 @@ import { ImagePicker } from 'expo';
 const ITEM_WIDTH = Dimensions.get("window").width;
 const ITEM_HEIGHT = Dimensions.get("window").height;
 
-export default class AddScreen extends React.Component {
-  
-  // static navigationOptions = {
-  //   header: null
-  // }
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { saveToAsyncStorage } from "../actions/DataActions";
 
-  constructor() {
-    super();
+class AddScreen extends React.Component {
+  
+  constructor(props) {
+    super(props)
     this.state = {
-      image: null
+        data: this.props.userData.currentData,
+        fullData: this.props.userData.currentData,
+        image: null,
+        food: {
+          food_name: "",
+          img: "",
+          price: "",
+          notes: "",
+          date: ""
+        }
     }
+}
+
+  static navigationOptions = {
+    header: null
   }
 
   _pickImage = async () => {
@@ -22,12 +35,20 @@ export default class AddScreen extends React.Component {
         allowsEditing: true,
         aspect: [5, 5],
     });
-  
+
     console.log(result);
   
     if (!result.cancelled) {
       this.setState({
+        food: {
+          food_name: this.state.food.food_name,
+          img: result.uri,
+          price: this.state.food.price,
+          notes: this.state.food.notes,
+          date: this.state.food.date
+        },
         image: result.uri
+        
       });
     }
   };
@@ -36,7 +57,7 @@ export default class AddScreen extends React.Component {
       let {image} = this.state;
        return (
          <View style={styles.container}>
-          <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={100} style={styles.appView}>
+          <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={ITEM_HEIGHT/2} style={styles.appView}>
           
           {!image && <ActivityIndicator style={styles.pic}/>}
           {image &&
@@ -54,19 +75,56 @@ export default class AddScreen extends React.Component {
           
            <Text style={styles.wordName}>Food Name:</Text>
            
-           <TextInput style={styles.inName}></TextInput>
+           <TextInput 
+            style={styles.inName}
+            onChangeText={(text) => this.setState({ 
+              food: {
+                food_name: text,
+                img: this.state.food.img,
+                price: this.state.food.price,
+                notes: this.state.food.notes,
+                date: this.state.food.date
+              } 
+            })}
+           />
            
            <Text style={styles.wordPrice}>Price:</Text>
            
-           <TextInput style={styles.inPrice}></TextInput>
+           <TextInput 
+            style={styles.inPrice}
+            onChangeText={(text) => this.setState({ 
+              food: {
+                food_name: this.state.food.food_name,
+                img: this.state.food.img,
+                price: text,
+                notes: this.state.food.notes,
+                date: this.state.food.date
+              } 
+             })}
+           />
            
            <Text style={styles.wordNotes}>Notes:</Text>
 
-           <TextInput style={styles.inNotes} editable={true} maxLength={400} multiline={true}></TextInput>
+           <TextInput 
+            style={styles.inNotes} 
+            editable={true} 
+            maxLength={400} 
+            multiline={true}
+            onChangeText={(text) => this.setState({ 
+              food: {
+                food_name: this.state.food.food_name,
+                img: this.state.food.img,
+                price: this.state.food.price,
+                notes: text,
+                date: this.state.food.date
+              } 
+             })}
+           />
            
+           <View style={{flexDirection:'row', padding: 20}}>
            <TouchableHighlight 
            style={styles.saveButton}
-           onPress={()=>console.log('2')}
+           onPress={()=>this.props.saveToAsyncStorage(this.state.food)}
            underlayColor="white"
            >
             <Text>Save</Text>
@@ -74,11 +132,12 @@ export default class AddScreen extends React.Component {
 
            <TouchableHighlight 
            style={styles.cancelButton}
-           onPress={()=>console.log('3')}
+           onPress={() => {this.props.navigation.navigate('FoodDetails')}}
            underlayColor="white"
            >
             <Text>Cancel</Text>
            </TouchableHighlight>
+           </View>
 
            </KeyboardAvoidingView>
          </View>
@@ -142,6 +201,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#DDDDDD',
     padding: 10,
     width: ITEM_WIDTH/3,
+    margin:10,
     borderRadius: 10,
     borderWidth: 1.5,
   },
@@ -150,6 +210,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#DDDDDD',
     padding: 10,
     width: ITEM_WIDTH/3,
+    margin:10,
     borderRadius: 10,
     borderWidth: 1.5
   },
@@ -158,3 +219,16 @@ const styles = StyleSheet.create({
     height: 200,
   }
 })
+
+const mapStateToProps = (state) => {
+  const { userData } = state;
+  return { userData }
+};
+
+const mapDispatchToProps = dispatch => (
+  bindActionCreators({
+      saveToAsyncStorage,
+  }, dispatch)
+);
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddScreen);
