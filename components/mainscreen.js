@@ -159,7 +159,7 @@ class MainScreen extends React.Component {
                         <ScrollView contentContainerStyle={styles.modal}>
                                 <Icon style={styles.textx} name="close" size={25}  onPress={() => {this.setModalVisible(false, 0, { 'notes' : 'empty'})}} color="#000" />
                                 
-
+                                <Image style={{flex:1, resizeMode: 'contain'}} source={{uri: this.state.item_data.img}}></Image>
 
                                 <Text
                                     style={{
