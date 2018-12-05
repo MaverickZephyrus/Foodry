@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet, View, Dimensions, Text, FlatList, Button, TouchableHighlight, Modal,
-    StatusBar, TextInput, Image, ImageBackground } from "react-native";
+    StatusBar, TextInput, Image, ImageBackground, Alert } from "react-native";
 
 // TODO:    - integrate google places api for results
 //          - add modal view as preview before adding place
@@ -14,18 +14,59 @@ export default class AddPlace extends React.Component {
                 { name: 'Gyoza Bar', cat: 'Japanese Restaurant', addr: '622 W Pender St, Vancouver, BC V6B 1V8'},
                 { name: 'Kita No Donburi', cat: 'Japanese Restaurant', addr: '423 Seymour St, Vancouver, BC V6B 1M1'},
                 { name: 'Peaceful Restaurant', cat: 'Chinese Restaurant', addr: '602 Seymour St, Vancouver, BC V6B 3K3'}
-            ]
+            ],
+            keyword: '',
+            coords: {}
         }
     }
 
     // hide top navigation bar
     static navigationOptions = {
-        // header: null,
+        title: 'Search Place',
+        headerTitleStyle: {
+            marginLeft: 0,
+        }
     };
 
-    // search function using google places api
-    _searchPlaces = () => {
+    componentDidMount() {
+        this._locationPermission();
+    }
 
+    _locationPermission = async() => {
+        const { Location, Permissions } = Expo;
+        const { status } = await Permissions.askAsync(Permissions.LOCATION);
+        const locStat = await Location.getProviderStatusAsync();
+        if (status != 'granted' || locStat.locationServicesEnabled == false) {
+            Alert.alert(
+                'Location Services',
+                'Location Services not enabled or permitted. Please turn it ON and/or give permission.',
+                [
+                    {text: 'OK', onPress: () => this.props.navigation.goBack()}
+                ],
+                { cancelable: false }
+            )
+        } else {
+            currentLocation = await Location.getCurrentPositionAsync({})
+            this.setState({
+                coords: currentLocation.coords
+            })
+            console.log(this.state.coords);
+        }
+    }
+
+    // search function using google places api
+    _searchPlaces = keyword => {
+        let API_KEY = 'AIzaSyASOtIFQXVniqmE5vVMqhf0WstuzQsSpAw';
+        // fetch(`https://maps.googleapis.com/maps/api/place/details/json?placeid=ChIJN1t_tDeuEmsRUsoyG83frY4&fields=name,rating,formatted_phone_number&key=${API_KEY}`);
+        //         &locationbias=circle:2000@47.6918452,-122.2226413
+        // fetch(`https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=${keyword}&inputtype=textquery&fields=photos,formatted_address,name,opening_hours,rating,icon,id,place_id,type&key=${API_KEY}`)
+        fetch(`https://maps.googleapis.com/maps/api/place/textsearch/json?query=${keyword}&location=${this.state.coords.latitude},${this.state.coords.longitude}&radius=20000&region=ca&type=restaurant&key=${API_KEY}`)
+        .then((response) => {
+            let myPlaces = JSON.parse(response._bodyText).results;
+            this.setState({
+                searchResult: myPlaces
+            })
+        })
     }
 
     render () {
@@ -37,7 +78,9 @@ export default class AddPlace extends React.Component {
                 <View style={styles.searchContainer}>
                     <Image style={styles.searchIcon} source={require('../assets/searchgrey.png')} />
                     <TextInput style={styles.input}
-                        placeholder='Search..'
+                        placeholder='Search..' 
+                        onChangeText={keyword => this.setState({keyword})}
+                        onSubmitEditing={() => this._searchPlaces(this.state.keyword)}
                     />
                 </View>
 
@@ -50,8 +93,8 @@ export default class AddPlace extends React.Component {
                             <TouchableHighlight style={{borderRadius: 10}} onPress={() => console.log('working')}>
                                 <View style={styles.results}>
                                     <Text style={[styles.resultText, { fontWeight: 'bold'}]}>{item.item.name}</Text>
-                                    <Text style={[styles.resultText, {textDecorationLine: 'underline'}]}>{item.item.cat}</Text>
-                                    <Text style={styles.resultText}>{item.item.addr}</Text>
+                                    <Text style={[styles.resultText, {textDecorationLine: 'underline'}]}>Rating: {item.item.rating}</Text>
+                                    <Text style={styles.resultText}>{item.item.formatted_address}</Text>
                                 </View>
                             </TouchableHighlight>
                         )}
@@ -93,7 +136,7 @@ const styles = StyleSheet.create({
     listContainer: {
         backgroundColor: 'rgba(0,0,0,0.5)',
         width: width * 0.9,
-        height: height * 0.85,
+        height: height * 0.8,
         margin: height * 0.02,
         borderRadius: 10,
         padding: width * 0.01
