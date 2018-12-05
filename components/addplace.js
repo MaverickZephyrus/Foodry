@@ -1,22 +1,23 @@
 import React from "react";
 import { StyleSheet, View, Dimensions, Text, FlatList, Button, TouchableHighlight, Modal,
     StatusBar, TextInput, Image, ImageBackground, Alert } from "react-native";
+import { API_KEY } from '../apikey/apikey';
 
-// TODO:    - integrate google places api for results
-//          - add modal view as preview before adding place
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { addPlace } from "../actions/DataActions";
 
-export default class AddPlace extends React.Component {
+
+export class AddPlace extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            searchResult: [
-                { name: 'Gyoza Bar', cat: 'Japanese Restaurant', addr: '622 W Pender St, Vancouver, BC V6B 1V8'},
-                { name: 'Kita No Donburi', cat: 'Japanese Restaurant', addr: '423 Seymour St, Vancouver, BC V6B 1M1'},
-                { name: 'Peaceful Restaurant', cat: 'Chinese Restaurant', addr: '602 Seymour St, Vancouver, BC V6B 3K3'}
-            ],
+            searchResult: [],
             keyword: '',
-            coords: {}
+            coords: {},
+            modalShow: false,
+            modalData: {item: {name: '', formatted_address: '', rating: ''}},
         }
     }
 
@@ -56,10 +57,6 @@ export default class AddPlace extends React.Component {
 
     // search function using google places api
     _searchPlaces = keyword => {
-        let API_KEY = 'AIzaSyASOtIFQXVniqmE5vVMqhf0WstuzQsSpAw';
-        // fetch(`https://maps.googleapis.com/maps/api/place/details/json?placeid=ChIJN1t_tDeuEmsRUsoyG83frY4&fields=name,rating,formatted_phone_number&key=${API_KEY}`);
-        //         &locationbias=circle:2000@47.6918452,-122.2226413
-        // fetch(`https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=${keyword}&inputtype=textquery&fields=photos,formatted_address,name,opening_hours,rating,icon,id,place_id,type&key=${API_KEY}`)
         fetch(`https://maps.googleapis.com/maps/api/place/textsearch/json?query=${keyword}&location=${this.state.coords.latitude},${this.state.coords.longitude}&radius=20000&region=ca&type=restaurant&key=${API_KEY}`)
         .then((response) => {
             let myPlaces = JSON.parse(response._bodyText).results;
@@ -68,6 +65,26 @@ export default class AddPlace extends React.Component {
             })
         })
     }
+
+    _addPlace = () => {
+        console.log('adding...');
+        // console.log(this.state.modalData);
+        let id = this.state.modalData.item.name.toLowerCase().slice(0, 3) + this.state.modalData.item.formatted_address.toLowerCase().slice(-3);
+        console.log(id);
+        let resto = {
+            id: id,
+            restaurant: this.state.modalData.item.name,
+            address: this.state.modalData.item.formatted_address,
+            rating: this.state.modalData.item.rating,
+            foods: []
+        };
+        this.props.addPlace(resto);
+        console.log(this.props.userData.currentData[0].id);
+        if (this.props.userData.currentData[0].id == id) {
+            this.props.navigation.goBack();
+        }
+    }
+
 
     render () {
         return (
@@ -90,7 +107,7 @@ export default class AddPlace extends React.Component {
                         data={this.state.searchResult}
                         keyExtractor={(item, index) => item.name + index}
                         renderItem={(item) => (
-                            <TouchableHighlight style={{borderRadius: 10}} onPress={() => console.log('working')}>
+                            <TouchableHighlight style={{borderRadius: 10}} onPress={() => {this.setState({modalData: item, modalShow: !this.state.modalShow})}}>
                                 <View style={styles.results}>
                                     <Text style={[styles.resultText, { fontWeight: 'bold'}]}>{item.item.name}</Text>
                                     <Text style={[styles.resultText, {textDecorationLine: 'underline'}]}>Rating: {item.item.rating}</Text>
@@ -101,6 +118,25 @@ export default class AddPlace extends React.Component {
                         ItemSeparatorComponent={() => <View style={{height: height * 0.005}} />}
                     />
                 </View>
+
+                <Modal animationType={'fade'} transparent={true}
+                    visible={this.state.modalShow} onRequestClose={() => this.setState({ modalShow: !this.state.modalShow })}>
+                    <View style={styles.modalBg}>
+                        <View style={styles.modal}>
+                            <View style={{alignItems: 'flex-end'}}>
+                                <TouchableHighlight onPress={() => this.setState({ modalShow: !this.state.modalShow })}>
+                                    <Text style={{fontSize: height*0.02, marginRight: width*0.03, marginTop: height*0.01}} >X Close</Text>
+                                </TouchableHighlight>
+                            </View>
+                            <Text style={{fontWeight: 'bold', fontSize: height * 0.04, margin: height*0.02}}>{this.state.modalData.item.name}</Text>
+                            <Text style={{ fontSize: height * 0.03, margin: height * 0.02 }}>
+                                Rating: <Text style={{ textDecorationLine: 'underline' }}>{this.state.modalData.item.rating}</Text>
+                            </Text>
+                            <Text style={{ fontSize: height * 0.03, margin: height * 0.02, marginBottom: height*0.05}}>{this.state.modalData.item.formatted_address}</Text>
+                            <Button style={{marginTop: height*0.05,borderRadius: 100, width: 100}} title='Add Place' onPress={() => {this._addPlace()}}/>
+                        </View>
+                    </View>
+                </Modal>
             </ImageBackground>
         )
     }
@@ -151,4 +187,32 @@ const styles = StyleSheet.create({
         borderColor: 'white',
         paddingLeft: width * 0.01,
     },
+    modalBg: {
+        flex: 1,
+        backgroundColor: 'rgba(0,0,0,0.5)',
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    modal: {
+        width: width * 0.8,
+        height: height * 0.45,
+        backgroundColor: 'white',
+        borderRadius: width * 0.05,
+        padding: width * 0.02,
+    }
 })
+
+// Bindings for redux
+const mapStateToProps = (state) => {
+    const { userData } = state;
+    return { userData }
+};
+
+const mapDispatchToProps = dispatch => (
+    bindActionCreators({
+        addPlace,
+    }, dispatch)
+);
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddPlace);
+// end of bindings

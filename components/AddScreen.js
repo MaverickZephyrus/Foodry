@@ -21,7 +21,9 @@ class AddScreen extends React.Component {
           img: "",
           price: "",
           notes: "",
-          date: ""
+          date: new Date().toDateString(),
+          address: "",
+          restaurant: "",
         }
     }
 }
@@ -45,7 +47,9 @@ class AddScreen extends React.Component {
           img: result.uri,
           price: this.state.food.price,
           notes: this.state.food.notes,
-          date: this.state.food.date
+          date: this.state.food.date,
+          address: this.state.food.address,
+          restaurant: this.state.food.restaurant,
         },
         image: result.uri
         
@@ -53,14 +57,20 @@ class AddScreen extends React.Component {
     }
   };
 
+  _saveBut = async (id, newFood) => {
+    this.props.saveToAsyncStorage(id, newFood)
+    this.props.navigation.navigate('MyPlace')
+  }
+
   render() {
+      let restData = this.props.navigation.getParam('data', 'NO DATA');
       let {image} = this.state;
        return (
          <View style={styles.container}>
           <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={ITEM_HEIGHT/2} style={styles.appView}>
           
-          {!image && <ActivityIndicator style={styles.pic}/>}
-          {image &&
+          {!image && <Image source={require('../assets/default.png')} style={styles.pic} />}
+          {image && 
             <Image source={{
             uri: image
           }} style={styles.pic} />}
@@ -83,7 +93,9 @@ class AddScreen extends React.Component {
                 img: this.state.food.img,
                 price: this.state.food.price,
                 notes: this.state.food.notes,
-                date: this.state.food.date
+                date: this.state.food.date,
+                address: restData[0].address,
+                restaurant: restData[0].restaurant,
               } 
             })}
            />
@@ -98,7 +110,9 @@ class AddScreen extends React.Component {
                 img: this.state.food.img,
                 price: text,
                 notes: this.state.food.notes,
-                date: this.state.food.date
+                date: this.state.food.date,
+                address: restData[0].address,
+                restaurant: restData[0].restaurant,
               } 
              })}
            />
@@ -116,7 +130,9 @@ class AddScreen extends React.Component {
                 img: this.state.food.img,
                 price: this.state.food.price,
                 notes: text,
-                date: this.state.food.date
+                date: this.state.food.date,
+                address: restData[0].address,
+                restaurant: restData[0].restaurant,
               } 
              })}
            />
@@ -124,7 +140,7 @@ class AddScreen extends React.Component {
            <View style={{flexDirection:'row', padding: 20}}>
            <TouchableHighlight 
            style={styles.saveButton}
-           onPress={()=>this.props.saveToAsyncStorage(this.state.food)}
+           onPress={() => {this._saveBut(restData[0].id, this.state.food)}}
            underlayColor="white"
            >
             <Text>Save</Text>
