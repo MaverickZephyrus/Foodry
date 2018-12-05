@@ -119,7 +119,7 @@ class MainScreen extends React.Component {
                     onPress={() => {
                       this._
                       this.props.navigation.navigate('FoodDetails',{
-                        address: item.address, restaurant: item.restaurant, data: this.state.foodDetail})
+                        address: item.address, restaurant: item.restaurant, data: this.state.foodDetail, raw: this.props.userData.currentData})
                 }}
                   >
                     <Bold>{item.restaurant}</Bold> {"\n"}@ {item.address}
