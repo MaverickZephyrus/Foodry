@@ -15,8 +15,7 @@ const appState = {
           price: "$15.99",
           notes:
             "I love it for the user to search the list, we need to add a search bar on the top of the FlatList. FlatList has a prop to add any custom component to its header. I love it. I love it for the user to search the list, we need to add a search bar on the top of the FlatList. FlatList has a prop to add any custom component to its header. I love it. I love it for the user to search the list, we need to add a search bar on the top of the FlatList. FlatList has a prop to add any custom component to its header. I love it.",
-          date: "Nov 15, 2018",
-          phone:'604-648-4384'
+          date: "Nov 15, 2018"
         },
         {
           food_name: "Pizza",
@@ -25,8 +24,7 @@ const appState = {
           price: "$8.99",
           notes:
             "I love it for the user to search the list, we need to add a search bar on the top of the FlatList. FlatList has a prop to add any custom component to its header. I love it.",
-          date: "Nov 15, 2018",
-          phone:'604-648-4384'
+          date: "Nov 15, 2018"
         }
       ]
     },
@@ -42,8 +40,7 @@ const appState = {
             price: "$15.99",
             notes:
               "I love it for the user to search the list, we need to add a search bar on the top of the FlatList. FlatList has a prop to add any custom component to its header. I love it.",
-            date: "Nov 15, 2018",
-            phone:'604-648-4384'
+            date: "Nov 15, 2018"
           },
           {
             food_name: "Sushi",
@@ -52,9 +49,33 @@ const appState = {
             price: "$8.99",
             notes:
               "I love it for the user to search the list, we need to add a search bar on the top of the FlatList. FlatList has a prop to add any custom component to its header. I love it.",
-            date: "Nov 15, 2018",
-          phone:'604-648-4384'
+            date: "Nov 15, 2018"
 
+          }
+        ]
+      },
+      {
+        id: 'sus4l9',
+        address: "4635 Kingsway, Burnaby, BC V5H 4L9",
+        restaurant: "Sushi Gardenm n",
+        foods: [
+          {
+            food_name: "Sushi",
+            img:
+                  "https://static1.squarespace.com/static/5849a1775016e1094e1d0763/t/5849ddc1197aeaa33558470e/1481235920269/2016-01-Sushi-plate.jpg?format=1500w",
+            price: "$15.99",
+            notes:
+              "I love it for the user to search the list, we need to add a search bar on the top of the FlatList. FlatList has a prop to add any custom component to its header. I love it.",
+            date: "Nov 15, 2018"
+          },
+          {
+            food_name: "Sushi",
+            img:
+                  "https://static1.squarespace.com/static/5849a1775016e1094e1d0763/t/5849ddc1197aeaa33558470e/1481235920269/2016-01-Sushi-plate.jpg?format=1500w",
+            price: "$8.99",
+            notes:
+              "I love it for the user to search the list, we need to add a search bar on the top of the FlatList. FlatList has a prop to add any custom component to its header. I love it.",
+            date: "Nov 15, 2018"
           }
         ]
       }
@@ -82,9 +103,16 @@ export const DataReducer = (state = appState, action) => {
 
         case 'SAVE_TO_ASYNCSTORAGE':
 
-            console.log(currentData)
+            for(var i = 0; i < currentData.length; i++) {
+                if (currentData[i].id === action.payload[0]) {
+                    console.log('match')
+                    currentData[i].foods.push(action.payload[1])
+                } else {
+                    console.log('no match')
+                }
+            }
 
-            currentData[0].foods.push(action.payload)
+            console.log(currentData)
 
             return state
         

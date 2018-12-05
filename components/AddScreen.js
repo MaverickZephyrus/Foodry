@@ -21,7 +21,9 @@ class AddScreen extends React.Component {
           img: "",
           price: "",
           notes: "",
-          date: ""
+          date: "",
+          address: "",
+          restaurant: "",
         }
     }
 }
@@ -45,7 +47,9 @@ class AddScreen extends React.Component {
           img: result.uri,
           price: this.state.food.price,
           notes: this.state.food.notes,
-          date: this.state.food.date
+          date: this.state.food.date,
+          address: "",
+          restaurant: "",
         },
         image: result.uri
         
@@ -54,6 +58,7 @@ class AddScreen extends React.Component {
   };
 
   render() {
+      let restData = this.props.navigation.getParam('data', 'NO DATA');
       let {image} = this.state;
        return (
          <View style={styles.container}>
@@ -83,7 +88,9 @@ class AddScreen extends React.Component {
                 img: this.state.food.img,
                 price: this.state.food.price,
                 notes: this.state.food.notes,
-                date: this.state.food.date
+                date: this.state.food.date,
+                address: restData[0].address,
+                restaurant: restData[0].restaurant,
               } 
             })}
            />
@@ -98,7 +105,9 @@ class AddScreen extends React.Component {
                 img: this.state.food.img,
                 price: text,
                 notes: this.state.food.notes,
-                date: this.state.food.date
+                date: this.state.food.date,
+                address: restData[0].address,
+                restaurant: restData[0].restaurant,
               } 
              })}
            />
@@ -116,7 +125,9 @@ class AddScreen extends React.Component {
                 img: this.state.food.img,
                 price: this.state.food.price,
                 notes: text,
-                date: this.state.food.date
+                date: this.state.food.date,
+                address: restData[0].address,
+                restaurant: restData[0].restaurant,
               } 
              })}
            />
@@ -124,7 +135,7 @@ class AddScreen extends React.Component {
            <View style={{flexDirection:'row', padding: 20}}>
            <TouchableHighlight 
            style={styles.saveButton}
-           onPress={()=>this.props.saveToAsyncStorage(this.state.food)}
+           onPress={()=>this.props.saveToAsyncStorage(restData[0].id, this.state.food)}
            underlayColor="white"
            >
             <Text>Save</Text>
