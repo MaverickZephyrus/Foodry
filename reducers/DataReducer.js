@@ -1,3 +1,4 @@
+import { AsyncStorage } from "react-native"
 // currentData is mainly for visual purposes as once you load from AsyncStorage
 // the value is replaced it can actaually be initially set as empty.
 // for the meantime, we populate it so we can get state before actually manipulating it
@@ -38,6 +39,7 @@ export const DataReducer = (state = appState, action) => {
 
             console.log(currentData)
 
+            AsyncStorage.setItem('userData', JSON.stringify(currentData))
             return state
         
         // default return when no case is used
@@ -45,6 +47,3 @@ export const DataReducer = (state = appState, action) => {
             return state
     }
 }
-
-// NOTE TO TRAVIS: ADD THIS LINE WHEN SAVING TO ASYNCSTORAGE AFTER ADDING FOOD
-// AsyncStorage.setItem('userData', JSON.stringify(currentData));
