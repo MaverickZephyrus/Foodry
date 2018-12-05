@@ -62,8 +62,8 @@ class MainScreen extends React.Component {
         let raw =  this.props.navigation.getParam('raw', 'NO DATA');
         let restaurant = this.props.navigation.getParam('restaurant', 'NO DATA');
         var raw1 = _.filter(raw, {'restaurant': restaurant });
-        console.log(raw1);
         var place = _.filter(data, {'restaurant': restaurant });
+        console.log(data)
         const { column, key } = this.state;
         const { navigation } = this.props;
         const Bold = (props) => <Text style={{fontWeight: 'bold'}}>{props.children}</Text>
@@ -73,8 +73,9 @@ class MainScreen extends React.Component {
           resizeMode='cover' 
           source={{uri:'https://images.unsplash.com/photo-1520405350075-ea8df9ae72a5?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=56df2db5de7d9fe47c39161937d88baf&auto=format&fit=crop&w=934&q=80'}}> 
                 <View style={styles.restHeader}>
-                    <Text style={styles.restInfo}><Bold>{place[0].restaurant}</Bold></Text>
-                    <Text style={styles.restInfo}>{place[0].address}</Text>
+                    <Text style={styles.restInfo}><Bold>Restaurant: </Bold>{raw1[0].restaurant}</Text>
+                    <Text style={styles.restInfo}><Bold>Address: </Bold>{raw1[0].address}</Text>
+                    <Text style={styles.restInfo}><Bold>Rating: </Bold>{raw1[0].rating}</Text>
                 </View>
 
                 <FlatList 

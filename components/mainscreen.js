@@ -39,7 +39,6 @@ class MainScreen extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            raw_data: this.props.userData.currentData,
             data: [],
             column: 2,
             key: 1,
@@ -137,7 +136,7 @@ class MainScreen extends React.Component {
         let data = await AsyncStorage.getItem('userData');
         if (data != null) {
             let parsedData = JSON.parse(data);
-            console.log(parsedData);
+            // console.log(parsedData);
             this.props.loadFromAsyncStorage(parsedData);
         }
     }
@@ -152,14 +151,17 @@ class MainScreen extends React.Component {
     };
 
     _parserawdata(){
-        const raw = this.state.raw_data
+        const raw = this.props.userData.currentData;
         const parsedata = []
+        console.log(raw)
         raw.map((single) => {
             single.foods.map((s) =>{
                 s['restaurant'] = single.restaurant
             })
             parsedata.push(single.foods)
+            // console.log(parsedata)
         });
+        // console.log(parsedata)
         var result = [].concat.apply([], parsedata);
         this.setState({
             data: result,
