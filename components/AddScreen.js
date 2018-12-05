@@ -21,7 +21,7 @@ class AddScreen extends React.Component {
           img: "",
           price: "",
           notes: "",
-          date: "",
+          date: new Date().toDateString(),
           address: "",
           restaurant: "",
         }
@@ -48,8 +48,8 @@ class AddScreen extends React.Component {
           price: this.state.food.price,
           notes: this.state.food.notes,
           date: this.state.food.date,
-          address: "",
-          restaurant: "",
+          address: this.state.food.address,
+          restaurant: this.state.food.restaurant,
         },
         image: result.uri
         
@@ -64,8 +64,8 @@ class AddScreen extends React.Component {
          <View style={styles.container}>
           <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={ITEM_HEIGHT/2} style={styles.appView}>
           
-          {!image && <ActivityIndicator style={styles.pic}/>}
-          {image &&
+          {!image && <Image source={require('../assets/default.png')} style={styles.pic} />}
+          {image && 
             <Image source={{
             uri: image
           }} style={styles.pic} />}
