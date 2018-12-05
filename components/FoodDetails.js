@@ -54,7 +54,10 @@ class MainScreen extends React.Component {
 
     render() {
         let data = this.props.navigation.getParam('data', 'NO DATA');
+        let raw =  this.props.navigation.getParam('raw', 'NO DATA');
         let restaurant = this.props.navigation.getParam('restaurant', 'NO DATA');
+        var raw1 = _.filter(raw, {'restaurant': restaurant });
+        console.log(raw1);
         var place = _.filter(data, {'restaurant': restaurant });
         const { column, key } = this.state;
         const { navigation } = this.props;
@@ -71,10 +74,17 @@ class MainScreen extends React.Component {
                 <FlatList 
                     data={place}
                     renderItem={({ item }) => (
+
+                        <TouchableHighlight
+                        onPress={() => { this.props.navigation.navigate('Details', {'img' : item.img, 'food_name': item.food_name, 'cost': item.cost, 'notes': item.notes, 'restaurant': item.restaurant, 'date': item.date }) }}>
+
+
                         <View style={styles.listItems}>
                             <Image source={{uri: item.img}} style={styles.pic}/>
                             <Text style={{marginLeft: 2, textAlign: 'center', justifyContent:'center'}}><Bold>{item.food_name}</Bold> --- {item.price}</Text>
                         </View>
+                        </TouchableHighlight>
+
                     )}
                 />
                 <IconM
@@ -83,7 +93,7 @@ class MainScreen extends React.Component {
           size={ITEM_WIDTH / 6}
           color='rgba(0, 0, 0)'
           onPress={() => {
-            this.props.navigation.navigate('AddScreen')
+            this.props.navigation.navigate('AddScreen', { 'data': data})
       }}
         />
             </View>

@@ -75,7 +75,7 @@ class MainScreen extends React.Component {
                         "https://static1.squarespace.com/static/5849a1775016e1094e1d0763/t/5849ddc1197aeaa33558470e/1481235920269/2016-01-Sushi-plate.jpg?format=1500w",
                   price: "$15.99",
                   notes:
-                    "I love it for the user to search the list, we need to add a search bar on the top of the FlatList. FlatList has a prop to add any custom component to its header. I love it.",
+                    "I love it for the user to search the list, we need to add a search bar on the top of the FlatList. FlatList has a prop to add any custom component to its header. I love it. ",
                   date: "Nov 15, 2018",
                   phone:'604-648-4384'
                 },
@@ -256,11 +256,6 @@ class MainScreen extends React.Component {
                                 </Text>
 
 
-
-
-
-
-
                                 <Text style={{ margin: 10, fontSize:11, color:'grey'}}>{this.state.item_data.date} </Text>
                                 <Text style={{ margin: 10 }}
                                     onPress={() => {
@@ -299,7 +294,8 @@ const styles = StyleSheet.create({
     },
     textx: {
         paddingLeft: ITEM_WIDTH/2 -25,
-        paddingVertical: 10
+        paddingVertical: 10,
+        left: ITEM_WIDTH/2.6
     },
     imgBackground: {
       width: '100%',
