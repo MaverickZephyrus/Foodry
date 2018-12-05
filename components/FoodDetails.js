@@ -73,6 +73,7 @@ class MainScreen extends React.Component {
 
                 <FlatList 
                     data={place}
+                    keyExtractor={(x, i) => i.toString()}
                     renderItem={({ item }) => (
 
                         <TouchableHighlight
@@ -91,7 +92,7 @@ class MainScreen extends React.Component {
           style={styles.add_circle_icon}
           name="add-circle"
           size={ITEM_WIDTH / 6}
-          color='rgba(0, 0, 0)'
+          color='rgba(0, 0, 0, 1)'
           onPress={() => {
             this.props.navigation.navigate('AddScreen', { 'data': raw1 })
       }}
