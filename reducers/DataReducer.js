@@ -13,7 +13,7 @@ export const DataReducer = (state = appState, action) => {
     // make a case to identify what you want to do
     // make sure to return state at the end or it will run the next case
     // after the current case.
-    case "LOAD_FROM_ASYNCSTORAGE":
+    case 'LOAD_FROM_ASYNCSTORAGE':
         // payload from DataActions loadFromAsyncStorage is saved as constant
         // can also do currentData = action.payload to avoid overusage of
         // constants declared. every constant regardless of case cannot be the
@@ -24,27 +24,33 @@ export const DataReducer = (state = appState, action) => {
         }
 
       return state;
+    
+    case 'ADD_NEW_PLACE':
+        currentData.splice(0, 0, action.payload);
+        AsyncStorage.setItem('userData', JSON.stringify(currentData));
+
+        return state;
 
 
-        case 'SAVE_TO_ASYNCSTORAGE':
+    case 'SAVE_TO_ASYNCSTORAGE':
 
-            for(var i = 0; i < currentData.length; i++) {
-                if (currentData[i].id === action.payload[0]) {
-                    console.log('match')
-                    currentData[i].foods.push(action.payload[1])
-                } else {
-                    console.log('no match')
-                }
+        for(var i = 0; i < currentData.length; i++) {
+            if (currentData[i].id === action.payload[0]) {
+                console.log('match')
+                currentData[i].foods.push(action.payload[1])
+            } else {
+                console.log('no match')
             }
+        }
 
-            console.log(currentData)
+        console.log(currentData)
 
-            AsyncStorage.setItem('userData', JSON.stringify(currentData))
-            return state
-        
-        // default return when no case is used
-        default:
-            return state
+        AsyncStorage.setItem('userData', JSON.stringify(currentData))
+        return state
+    
+    // default return when no case is used
+    default:
+        return state
     }
 }
 

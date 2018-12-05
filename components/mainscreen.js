@@ -58,6 +58,7 @@ class MainScreen extends React.Component {
 
    
     async componentDidMount() {
+        await AsyncStorage.removeItem('userData');
         await this._loadAsyncStorage();
         await this._loadFromAsyncStorage();
         this._parserawdata();
@@ -127,7 +128,6 @@ class MainScreen extends React.Component {
             AsyncStorage.setItem('userData', JSON.stringify(data));
         } else {
             console.log('Not null');
-            console.log(test);
         }
     }
     // end of preload data function
@@ -137,6 +137,7 @@ class MainScreen extends React.Component {
         let data = await AsyncStorage.getItem('userData');
         if (data != null) {
             let parsedData = JSON.parse(data);
+            console.log(parsedData);
             this.props.loadFromAsyncStorage(parsedData);
         }
     }
