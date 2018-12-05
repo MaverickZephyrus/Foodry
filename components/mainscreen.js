@@ -58,6 +58,7 @@ class MainScreen extends React.Component {
 
    
     async componentDidMount() {
+        // await AsyncStorage.removeItem('userData');
         await this._loadAsyncStorage();
         await this._loadFromAsyncStorage();
         this._parserawdata();
