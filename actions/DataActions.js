@@ -4,7 +4,12 @@ export const loadFromAsyncStorage = data => ({
     payload: data
 });
 
-export const saveToAsyncStorage = data => ({
+export const addPlace = place => ({
+    type: 'ADD_NEW_PLACE',
+    payload: place
+})
+
+export const saveToAsyncStorage = (id, data) => ({
     type: 'SAVE_TO_ASYNCSTORAGE',
-    payload: data 
-}) 
+    payload: [id, data]
+})

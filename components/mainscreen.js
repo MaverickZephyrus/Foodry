@@ -57,78 +57,90 @@ class MainScreen extends React.Component {
     };
 
    
-    componentDidMount() {
+    async componentDidMount() {
+        // await AsyncStorage.removeItem('userData');
+        await this._loadAsyncStorage();
+        await this._loadFromAsyncStorage();
         this._parserawdata();
         this.props.navigation.setParams({ increaseCount: this._handleSearch });
-        this._loadAsyncStorage();
       }
 
+    //  TODO: Remove this when everyone has data saved into AsyncStorage
+    //  This is preload data of restaurants and foods
       _loadAsyncStorage = async() => {
-        let data = [
-            {
-              address: "4635 Kingsway, dfsafdaBurnaby, BC V5H 4L3",
-              restaurant: "Sushi Gdsafarden",
-              foods: [
-                {
-                  food_name: "Sushi",
-                  img:
-                        "https://static1.squarespace.com/static/5849a1775016e1094e1d0763/t/5849ddc1197aeaa33558470e/1481235920269/2016-01-Sushi-plate.jpg?format=1500w",
-                  price: "$15.99",
-                  notes:
-                    "I love it for the user to search the list, we need to add a search bar on the top of the FlatList. FlatList has a prop to add any custom component to its header. I love it.",
-                  date: "Nov 15, 2018",
-                  phone:'604-648-4384'
-                },
-                {
-                  food_name: "Pizza",
-                  img:
-                        "https://static1.squarespace.com/static/5849a1775016e1094e1d0763/t/5849ddc1197aeaa33558470e/1481235920269/2016-01-Sushi-plate.jpg?format=1500w",
-                  price: "$8.99",
-                  notes:
-                    "I love it for the user to search the list, we need to add a search bar on the top of the FlatList. FlatList has a prop to add any custom component to its header. I love it.",
-                  date: "Nov 15, 2018",
-                  phone:'604-648-4384'
-                }
-              ]
-            },
-            {
-                address: "4635 Kingsway, Burnaby, BC V5H 4L3",
-                restaurant: "Sushi Garden",
-                foods: [
-                  {
-                    food_name: "Sushi",
-                    img:
-                          "https://static1.squarespace.com/static/5849a1775016e1094e1d0763/t/5849ddc1197aeaa33558470e/1481235920269/2016-01-Sushi-plate.jpg?format=1500w",
-                    price: "$15.99",
-                    notes:
-                      "I love it for the user to search the list, we need to add a search bar on the top of the FlatList. FlatList has a prop to add any custom component to its header. I love it.",
-                    date: "Nov 15, 2018",
-                    phone:'604-648-4384'
-                  },
-                  {
-                    food_name: "Sushi",
-                    img:
-                          "https://static1.squarespace.com/static/5849a1775016e1094e1d0763/t/5849ddc1197aeaa33558470e/1481235920269/2016-01-Sushi-plate.jpg?format=1500w",
-                    price: "$8.99",
-                    notes:
-                      "I love it for the user to search the list, we need to add a search bar on the top of the FlatList. FlatList has a prop to add any custom component to its header. I love it.",
-                    date: "Nov 15, 2018",
-                  phone:'604-648-4384'
-        
-                  }
-                ]
+          let data = [
+              {
+                  id: 'sus4l3',
+                  address: "4635 Kingsway, Burnaby, BC V5H 4L3",
+                  restaurant: "Sushi Garden Metro",
+                  rating: 3.8,
+                  foods: [
+                      {
+                          food_name: "Sushi Meal",
+                          img:
+                              "https://static1.squarespace.com/static/5849a1775016e1094e1d0763/t/5849ddc1197aeaa33558470e/1481235920269/2016-01-Sushi-plate.jpg?format=1500w",
+                          price: "$15.99",
+                          notes:
+                              "I love it for the user to search the list, we need to add a search bar on the top of the FlatList. FlatList has a prop to add any custom component to its header. I love it. I love it for the user to search the list, we need to add a search bar on the top of the FlatList. FlatList has a prop to add any custom component to its header. I love it. I love it for the user to search the list, we need to add a search bar on the top of the FlatList. FlatList has a prop to add any custom component to its header. I love it.",
+                          date: "Nov 15, 2018",
+                      },
+                      {
+                          food_name: "Seafood Pizza",
+                          img:
+                              "https://static.cuisineaz.com/610x610/i10453-pizza-aux-crevettes.jpg",
+                          price: "$8.99",
+                          notes:
+                              "I love it for the user to search the list, we need to add a search bar on the top of the FlatList. FlatList has a prop to add any custom component to its header. I love it.",
+                          date: "Nov 15, 2018",
+                      }
+                  ]
+              },
+              {
+                  id: 'sus1e2',
+                  address: "6611 Kingsway, Burnaby, BC V5E 1E2",
+                  restaurant: "Sushi Garden High Gate",
+                  rating: 3.9,
+                  foods: [
+                      {
+                          food_name: "California Sushi",
+                          img:
+                              "https://sushiaji.ca/img/cdn/533_ff8cac35529f89434e1d291c61d9e5a8.jpg",
+                          price: "$15.99",
+                          notes:
+                              "I love it for the user to search the list, we need to add a search bar on the top of the FlatList. FlatList has a prop to add any custom component to its header. I love it.",
+                          date: "Nov 15, 2018",
+                      },
+                      {
+                          food_name: "Dynamite Roll",
+                          img:
+                              "https://i.pinimg.com/originals/c9/ef/71/c9ef71ab42e904e0b31832e13b06b99b.jpg",
+                          price: "$8.99",
+                          notes:
+                              "I love it for the user to search the list, we need to add a search bar on the top of the FlatList. FlatList has a prop to add any custom component to its header. I love it.",
+                          date: "Nov 15, 2018",
+                      }
+                  ]
               }
           ];
 
-        let test = await AsyncStorage.get('userData');
-        if (test == undefined) {
-            console.log(test);
+        let test = await AsyncStorage.getItem('userData');
+        if (test == null) {
+            AsyncStorage.setItem('userData', JSON.stringify(data));
         } else {
-            console.log('Not undefined');
-            console.log(test);
+            console.log('Not null');
         }
     }
+    // end of preload data function
 
+    // Default behaviour of app to load data from local storage when starting
+    _loadFromAsyncStorage = async() => {
+        let data = await AsyncStorage.getItem('userData');
+        if (data != null) {
+            let parsedData = JSON.parse(data);
+            console.log(parsedData);
+            this.props.loadFromAsyncStorage(parsedData);
+        }
+    }
 
     _handleSearch = (text) =>{
     const data = _.filter(this.state.fullData, (lc) =>
@@ -256,11 +268,6 @@ class MainScreen extends React.Component {
                                 </Text>
 
 
-
-
-
-
-
                                 <Text style={{ margin: 10, fontSize:11, color:'grey'}}>{this.state.item_data.date} </Text>
                                 <Text style={{ margin: 10 }}
                                     onPress={() => {
@@ -299,7 +306,8 @@ const styles = StyleSheet.create({
     },
     textx: {
         paddingLeft: ITEM_WIDTH/2 -25,
-        paddingVertical: 10
+        paddingVertical: 10,
+        left: ITEM_WIDTH/2.6
     },
     imgBackground: {
       width: '100%',

@@ -71,20 +71,28 @@ class MainScreen extends React.Component {
 
                 <FlatList 
                     data={place}
+                    keyExtractor={(x, i) => i.toString()}
                     renderItem={({ item }) => (
+
+                        <TouchableHighlight
+                        onPress={() => { this.props.navigation.navigate('Details', {'img' : item.img, 'food_name': item.food_name, 'cost': item.cost, 'notes': item.notes, 'restaurant': item.restaurant, 'date': item.date }) }}>
+
+
                         <View style={styles.listItems}>
                             <Image source={{uri: item.img}} style={styles.pic}/>
                             <Text style={{marginLeft: 2, textAlign: 'center', justifyContent:'center'}}><Bold>{item.food_name}</Bold> --- {item.price}</Text>
                         </View>
+                        </TouchableHighlight>
+
                     )}
                 />
                 <IconM
           style={styles.add_circle_icon}
           name="add-circle"
           size={ITEM_WIDTH / 6}
-          color='rgba(0, 0, 0)'
+          color='rgba(0, 0, 0, 1)'
           onPress={() => {
-            this.props.navigation.navigate('AddScreen', { 'data': data})
+            this.props.navigation.navigate('AddScreen', { 'data': raw1 })
       }}
         />
             </View>
