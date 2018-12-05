@@ -4,13 +4,12 @@
 const appState = {
     currentData: [
         {
-            img:
-                "https://img.grouponcdn.com/deal/fmPws6o2uTweCftZu7yj/p4-2048x1229/v1/c700x420.jpg",
+            img:"https://img.grouponcdn.com/deal/fmPws6o2uTweCftZu7yj/p4-2048x1229/v1/c700x420.jpg",
             location: "4635 Kingsway, Burnaby, BC V5H 4L3",
             food_name: "Sushi",
             cost: "$8.99",
             restaurant: "Sushi Garden",
-            notes: "I love it for the user to search the list, we need to add a search bar on the top of the FlatList. FlatList has a prop to add any custom component to its header. I love it. ",
+            notes: "I love it We'll notify you via email so you can decide if you want to upgrade to a Pay-As-You-Go Azure subscription. If you do, you'll have access to all the popular products. If you don't, your subscription and products will be disabled. For the user to search the list, we need to add a search bar on the top of the FlatList. FlatList has a prop to add any custom component to its header. I love it. ",
             date: "Nov 15, 2018"
         },
         {
