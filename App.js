@@ -18,44 +18,13 @@ import { reducer } from './reducers';
 // We create redux as store and link reducer using createStore
 const store = createStore(reducer);
 
-const MainStack = createStackNavigator(
-  {
-    Main: {
-      screen: MainScreen
-    },
-    },
-    {
-      initialRouteName: 'Main',
-       transitionConfig: () => fadeIn(),
-    }
-)
-
-const MyPlaceStack = createStackNavigator(
-  {
-    MyPlace: {
-      screen: MyPlaceScreen
-    },
-    AddScreen:{
-      screen: AddScreen
-    },
-    FoodDetails:{
-      screen: FoodDetails
-    },
-    AddPlace: AddPlace
-    },
-    {
-      initialRouteName: 'MyPlace',
-       transitionConfig: () => fadeIn(),
-    }
-)
-
 const RootTab = createMaterialTopTabNavigator(
   {
     'My Foodry': {
-        screen: MainStack
+      screen: MainScreen
     },
     'My Places': {
-        screen: MyPlaceStack
+      screen: MyPlaceScreen
     }
     },
     {
@@ -76,6 +45,32 @@ const RootTab = createMaterialTopTabNavigator(
         },
     }
 )
+const SuperStack = createStackNavigator(
+  {
+    Main: {
+      screen: RootTab,
+      navigationOptions: {
+        header:null
+      },
+    },
+     MyPlace: {
+      screen: MyPlaceScreen
+    },
+    AddScreen:{
+      screen: AddScreen
+    },
+    FoodDetails:{
+      screen: FoodDetails
+    }, 
+    AddPlace:{
+      screen: AddPlace
+    }
+    },
+    {
+      initialRouteName: 'Main',
+      transitionConfig: () => fadeIn(),
+    }
+)
 
 
 export default class App extends React.Component {
@@ -84,7 +79,7 @@ export default class App extends React.Component {
         // We wrap RootTab with Provider and give it redux store
         return (
             <Provider store={store}>
-                <RootTab/>
+                <SuperStack/>
             </Provider>
         )
     }

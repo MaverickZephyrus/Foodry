@@ -8,10 +8,9 @@ import _ from "lodash";
 
 export default class FoodDetails extends React.Component {
 
-    static navigationOptions = {
-        header: null,
-
-    }
+    // static navigationOptions = {
+    //     header: null,    
+    // }
 
     state = {
         data: test_data,
