@@ -23,7 +23,7 @@ export class AddPlace extends React.Component {
 
     // hide top navigation bar
     static navigationOptions = {
-        title: 'Search Place',
+        title: 'Find Restuarant',
         headerTitleStyle: {
             marginLeft: 0,
         }

@@ -49,7 +49,12 @@ class MainScreen extends React.Component {
     }
 
     static navigationOptions = ({ navigation }) => {
-        return{}
+        return{
+            title: 'Restaurant Details',
+            headerTitleStyle: {
+                marginLeft: 0,
+            }
+        }
     };
 
     render() {
@@ -57,15 +62,18 @@ class MainScreen extends React.Component {
         let raw =  this.props.navigation.getParam('raw', 'NO DATA');
         let restaurant = this.props.navigation.getParam('restaurant', 'NO DATA');
         var raw1 = _.filter(raw, {'restaurant': restaurant });
+        console.log(raw1);
         var place = _.filter(data, {'restaurant': restaurant });
-        console.log(raw);
         const { column, key } = this.state;
         const { navigation } = this.props;
         const Bold = (props) => <Text style={{fontWeight: 'bold'}}>{props.children}</Text>
         return (
             <View style={styles.container}>
+            <ImageBackground style={ styles.imgBackground } 
+          resizeMode='cover' 
+          source={{uri:'https://images.unsplash.com/photo-1520405350075-ea8df9ae72a5?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=56df2db5de7d9fe47c39161937d88baf&auto=format&fit=crop&w=934&q=80'}}> 
                 <View style={styles.restHeader}>
-                    <Text style={styles.restInfo}>{place[0].restaurant}</Text>
+                    <Text style={styles.restInfo}><Bold>{place[0].restaurant}</Bold></Text>
                     <Text style={styles.restInfo}>{place[0].address}</Text>
                 </View>
 
@@ -76,11 +84,9 @@ class MainScreen extends React.Component {
 
                         <TouchableHighlight
                         onPress={() => { this.props.navigation.navigate('Details', {'img' : item.img, 'food_name': item.food_name, 'cost': item.cost, 'notes': item.notes, 'restaurant': item.restaurant, 'date': item.date }) }}>
-
-
                         <View style={styles.listItems}>
                             <Image source={{uri: item.img}} style={styles.pic}/>
-                            <Text style={{marginLeft: 2, textAlign: 'center', justifyContent:'center'}}><Bold>{item.food_name}</Bold> --- {item.price}</Text>
+                            <Text style={{marginLeft: 2, flex:1, justifyContent:'center', flexDirection: 'row'}}><Bold>{item.food_name}</Bold> --- {item.price}</Text>
                         </View>
                         </TouchableHighlight>
 
@@ -95,6 +101,7 @@ class MainScreen extends React.Component {
             this.props.navigation.navigate('AddScreen', { 'data': raw1 })
       }}
         />
+        </ImageBackground>
             </View>
         );
         }
@@ -102,16 +109,21 @@ class MainScreen extends React.Component {
     }
 
 const styles = StyleSheet.create({
+    imgBackground: {
+        width: '100%',
+        height: '100%',
+        flex: 1
+    },
     container: {
         backgroundColor: "#fff",
         justifyContent: "center",
         flex: 1
         },
     restHeader: {
-        height:ITEM_HEIGHT/4, 
+        height:ITEM_HEIGHT/8, 
         justifyContent:'space-evenly',
-        borderColor: 'black',
-        borderWidth: 1,
+        borderWidth: 2,
+        backgroundColor: 'rgba(255,255,255,0.4)'
     },
     restInfo: {
         marginLeft:10
@@ -119,10 +131,9 @@ const styles = StyleSheet.create({
     listItems: {
         flex: 1,
         flexDirection: 'row',
-        backgroundColor: "#DCDCDC", 
+        backgroundColor:'rgba(255,255,255,0.7)', 
         marginVertical: 2, 
         borderRadius: 5,
-        marginBottom: 5,
         borderColor: 'black',
     },
     pic: {

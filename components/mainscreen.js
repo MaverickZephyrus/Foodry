@@ -264,17 +264,17 @@ class MainScreen extends React.Component {
                                     }}
                                     >
 
-                                    <Bold>{this.state.item_data.food_name}</Bold> --- {this.state.item_data.cost} @ {this.state.item_data.restaurant} {"\n"} {"\n"} " {this.stringTruncate(this.state.item_data.notes, 200)} " 
+                                    <Bold>{this.state.item_data.food_name}</Bold> --- {this.state.item_data.cost} @ {this.state.item_data.restaurant} {"\n"} " {this.stringTruncate(this.state.item_data.notes, 200)} " 
                                 </Text>
 
 
                                 <Text style={{ margin: 10, fontSize:11, color:'grey'}}>{this.state.item_data.date} </Text>
-                                <Text style={{ margin: 10 }}
+                                <Text style={{ margin: 10, color: 'blue'}}
                                     onPress={() => {
             this.setState({ modalVisible: false }),
             this.props.navigation.navigate('Details', {'img' : this.state.item_data.img, 'food_name': this.state.item_data.food_name, 'cost': this.state.item_data.cost, 'notes': this.state.item_data.notes, 'restaurant': this.state.item_data.restaurant, 'date': this.state.item_data.date })
 
-            }}>Go to Details... </Text>
+            }}><Bold>Edit</Bold></Text>
 
                         </ScrollView>
                         </BlurView>
@@ -302,7 +302,7 @@ const styles = StyleSheet.create({
         width: ITEM_WIDTH-ITEM_WIDTH/15,
         backgroundColor: 'white',
         borderRadius:10,
-        marginTop: ITEM_WIDTH/2
+        marginTop: ITEM_WIDTH/4
     },
     textx: {
         paddingLeft: ITEM_WIDTH/2 -25,
