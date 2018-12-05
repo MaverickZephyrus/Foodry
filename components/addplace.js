@@ -1,6 +1,7 @@
 import React from "react";
 import { StyleSheet, View, Dimensions, Text, FlatList, Button, TouchableHighlight, Modal,
     StatusBar, TextInput, Image, ImageBackground, Alert } from "react-native";
+import { API_KEY } from '../assets/apikey';
 
 // TODO:    - integrate google places api for results
 //          - add modal view as preview before adding place
@@ -10,11 +11,7 @@ export default class AddPlace extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            searchResult: [
-                { name: 'Gyoza Bar', cat: 'Japanese Restaurant', addr: '622 W Pender St, Vancouver, BC V6B 1V8'},
-                { name: 'Kita No Donburi', cat: 'Japanese Restaurant', addr: '423 Seymour St, Vancouver, BC V6B 1M1'},
-                { name: 'Peaceful Restaurant', cat: 'Chinese Restaurant', addr: '602 Seymour St, Vancouver, BC V6B 3K3'}
-            ],
+            searchResult: [],
             keyword: '',
             coords: {}
         }
@@ -56,10 +53,6 @@ export default class AddPlace extends React.Component {
 
     // search function using google places api
     _searchPlaces = keyword => {
-        let API_KEY = 'AIzaSyASOtIFQXVniqmE5vVMqhf0WstuzQsSpAw';
-        // fetch(`https://maps.googleapis.com/maps/api/place/details/json?placeid=ChIJN1t_tDeuEmsRUsoyG83frY4&fields=name,rating,formatted_phone_number&key=${API_KEY}`);
-        //         &locationbias=circle:2000@47.6918452,-122.2226413
-        // fetch(`https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=${keyword}&inputtype=textquery&fields=photos,formatted_address,name,opening_hours,rating,icon,id,place_id,type&key=${API_KEY}`)
         fetch(`https://maps.googleapis.com/maps/api/place/textsearch/json?query=${keyword}&location=${this.state.coords.latitude},${this.state.coords.longitude}&radius=20000&region=ca&type=restaurant&key=${API_KEY}`)
         .then((response) => {
             let myPlaces = JSON.parse(response._bodyText).results;
