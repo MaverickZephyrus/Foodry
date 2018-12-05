@@ -93,7 +93,7 @@ class MainScreen extends React.Component {
           size={ITEM_WIDTH / 6}
           color='rgba(0, 0, 0)'
           onPress={() => {
-            this.props.navigation.navigate('AddScreen', { 'data': data})
+            this.props.navigation.navigate('AddScreen', { 'data': raw1 })
       }}
         />
             </View>
