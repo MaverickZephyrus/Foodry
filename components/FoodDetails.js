@@ -57,8 +57,8 @@ class MainScreen extends React.Component {
         let raw =  this.props.navigation.getParam('raw', 'NO DATA');
         let restaurant = this.props.navigation.getParam('restaurant', 'NO DATA');
         var raw1 = _.filter(raw, {'restaurant': restaurant });
-        console.log(raw1);
         var place = _.filter(data, {'restaurant': restaurant });
+        console.log(raw);
         const { column, key } = this.state;
         const { navigation } = this.props;
         const Bold = (props) => <Text style={{fontWeight: 'bold'}}>{props.children}</Text>
@@ -67,8 +67,6 @@ class MainScreen extends React.Component {
                 <View style={styles.restHeader}>
                     <Text style={styles.restInfo}>{place[0].restaurant}</Text>
                     <Text style={styles.restInfo}>{place[0].address}</Text>
-                    <Text style={styles.restInfo}>{place[0].phone}</Text>
-                    <Text style={styles.restInfo}>N/A</Text>
                 </View>
 
                 <FlatList 
