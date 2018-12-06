@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, TextInput, TouchableHighlight, View, Dimensions, Text, ActivityIndicator, Image, KeyboardAvoidingView } from "react-native";
+import { StyleSheet, TextInput, TouchableHighlight, View, Dimensions, Text, ActivityIndicator, Image, KeyboardAvoidingView, ImageBackground } from "react-native";
 import { ImagePicker } from 'expo';
 const ITEM_WIDTH = Dimensions.get("window").width;
 const ITEM_HEIGHT = Dimensions.get("window").height;
@@ -33,10 +33,7 @@ class AddScreen extends React.Component {
   }
 
   _pickImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-        allowsEditing: true,
-        aspect: [5, 5],
-    });
+    let result = await ImagePicker.launchImageLibraryAsync({});
 
     console.log(result);
   
@@ -69,13 +66,17 @@ class AddScreen extends React.Component {
       let {image} = this.state;
        return (
          <View style={styles.container}>
+          <ImageBackground style={ styles.imgBackground } 
+          resizeMode='cover' 
+          source={{uri:'https://images.unsplash.com/photo-1520405350075-ea8df9ae72a5?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=56df2db5de7d9fe47c39161937d88baf&auto=format&fit=crop&w=934&q=80'}}> 
           <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={ITEM_HEIGHT/2} style={styles.appView}>
           
-          {!image && <Image source={require('../assets/default.png')} style={styles.pic} />}
+          {!image && <Image source={require('../assets/default.png')} style={styles.pic} resizeMode='cover'  />}
           {image && 
             <Image source={{
             uri: image
-          }} style={styles.pic} />}
+          }} style={styles.pic} 
+          resizeMode='cover'/>}
 
           <TouchableHighlight 
             style={styles.uploadButton}
@@ -158,6 +159,7 @@ class AddScreen extends React.Component {
            </View>
 
            </KeyboardAvoidingView>
+           </ImageBackground>
          </View>
        );
      }
@@ -179,33 +181,36 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
   inName: {
-    borderColor: 'gray',
+    borderColor: 'black',
     borderWidth: 1.5,
     borderRadius: 10,
     width: ITEM_WIDTH/1.2,
-    padding: 2
+    padding: 2,
+    backgroundColor: 'rgba(255,255,255,0.7)'
   },
   wordPrice: {
     fontSize: 15,
   },
   inPrice: {
-    borderColor: 'gray',
+    borderColor: 'black',
     borderWidth: 1.5,
     borderRadius: 10,
     width: ITEM_WIDTH/1.2,
-    padding: 2
+    padding: 2,
+    backgroundColor: 'rgba(255,255,255,0.7)'
   },
   wordNotes: {
     fontSize: 15,
   },
   inNotes: {
-    borderColor: 'gray',
+    borderColor: 'black',
     borderWidth: 1.5,
     borderRadius: 10,
     width: ITEM_WIDTH/1.2,
     height: ITEM_HEIGHT/5,
     textAlignVertical: "top",
-    padding: 6
+    padding: 6,
+    backgroundColor: 'rgba(255,255,255,0.7)'
   },
   uploadButton: {
     alignItems: 'center',
@@ -234,9 +239,15 @@ const styles = StyleSheet.create({
     borderWidth: 1.5
   },
   pic: {
-    width: 200,
+    width: 350,
     height: 200,
-  }
+    marginTop: 25,
+  },
+  imgBackground: {
+    width: '100%',
+    height: '100%',
+    flex: 1
+},
 })
 
 const mapStateToProps = (state) => {
