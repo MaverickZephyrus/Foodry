@@ -240,7 +240,8 @@ class MainScreen extends React.Component {
                                 <Text
                                 style={{
                                     width: (ITEM_WIDTH - 5 * column) / column,
-                                    textAlign:'center'
+                                    textAlign:'center',
+                                    fontSize: 15
                                 }}
                                 >
                                 <Bold>{item.food_name}</Bold> --- {item.price} {"\n"}@ {item.restaurant}
@@ -266,8 +267,9 @@ class MainScreen extends React.Component {
                                 <Text
                                     style={{
                                         margin: 10,
-                                        height: 100,
-                                        overflow: "hidden"
+                                        height: 135,
+                                        overflow: "hidden",
+                                        fontSize: 18,
                                     }}
                                     >
 
@@ -275,8 +277,8 @@ class MainScreen extends React.Component {
                                 </Text>
 
 
-                                <Text style={{ margin: 10, fontSize:11, color:'#696969'}}>{this.state.item_data.date} </Text>
-                                <Text style={{ margin: 10, color: 'blue'}}
+                                <Text style={{ margin: 10, fontSize:15, color:'#696969'}}>{this.state.item_data.date} </Text>
+                                <Text style={{ margin: 10, color: '#002699', fontSize:15, marginBottom: 14}}
                                     onPress={() => {
             this.setState({ modalVisible: false }),
             this.props.navigation.navigate('Details', {'img' : this.state.item_data.img, 'food_name': this.state.item_data.food_name, 'price': this.state.item_data.price, 'notes': this.state.item_data.notes, 'restaurant': this.state.item_data.restaurant, 'date': this.state.item_data.date })
@@ -305,11 +307,11 @@ const styles = StyleSheet.create({
     flex:1
   },
     modal: {
-        height: ITEM_HEIGHT/1.50,
+        height: ITEM_HEIGHT/1.40,
         width: ITEM_WIDTH-ITEM_WIDTH/15,
         backgroundColor: 'white',
         borderRadius:10,
-        marginTop: ITEM_HEIGHT/4
+        marginTop: ITEM_HEIGHT/5
     },
     textx: {
         paddingLeft: ITEM_WIDTH/2 -25,

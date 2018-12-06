@@ -114,7 +114,8 @@ class MainScreen extends React.Component {
                   <Text
                     style={{
                       width: (ITEM_WIDTH - 5 * column) / column,
-                      textAlign: "center"
+                      textAlign: "center",
+                      fontSize: 15
                     }}
                     onPress={() => {
                       this._

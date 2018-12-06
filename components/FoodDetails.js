@@ -71,7 +71,8 @@ class MainScreen extends React.Component {
         const { column, key } = this.state;
         const { navigation } = this.props;
         const Bold = (props) => <Text style={{fontWeight: 'bold'}}>{props.children}</Text>
-        const Dateformat = (props) => <Text style={{color:'#696969'}}>{props.children}</Text>
+        const BigBold = (props) => <Text style={{fontWeight: 'bold', fontSize: 22}}>{props.children}</Text>
+        const Dateformat = (props) => <Text style={{color:'#696969', fontSize: 15}}>{props.children}</Text>
         return (
             <View style={styles.container}>
             <ImageBackground style={ styles.imgBackground } 
@@ -79,7 +80,7 @@ class MainScreen extends React.Component {
           resizeMode='cover' 
           source={{uri:'https://images.unsplash.com/photo-1520405350075-ea8df9ae72a5?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=56df2db5de7d9fe47c39161937d88baf&auto=format&fit=crop&w=934&q=80'}}> 
                 <View style={styles.restHeader}>
-                    <Text style={styles.restInfo}><Bold>Restaurant: </Bold>{raw1[0].restaurant}</Text>
+                    <Text style={styles.restInfo}><BigBold>{raw1[0].restaurant}</BigBold></Text>
                     <Text style={styles.restInfo}><Bold>Address: </Bold>{raw1[0].address}</Text>
                     <Text style={styles.restInfo}><Bold>Rating: </Bold>{raw1[0].rating}</Text>
                 </View>
@@ -94,7 +95,7 @@ class MainScreen extends React.Component {
                         onPress={() => { this.props.navigation.navigate('Details', {'img' : item.img, 'food_name': item.food_name, 'price': item.price, 'notes': item.notes, 'restaurant': item.restaurant, 'date': item.date }) }}>
                         <View style={styles.listItems}>
                             <Image source={{uri: item.img}} style={styles.pic}/>
-                            <Text style={{marginLeft: 3}}><Bold>{item.food_name}</Bold> {"\n"} {"\n"}{item.price} {"\n"} {"\n"}<Dateformat>{item.date}</Dateformat></Text>
+                            <Text style={{marginLeft: 3, fontSize: 15}}><Bold>{item.food_name}</Bold> {"\n"}{"\n"}{item.price}  {"\n"}{"\n"}<Dateformat>{item.date}</Dateformat></Text>
 
                         </View>
                         </TouchableHighlight>
@@ -134,11 +135,11 @@ const styles = StyleSheet.create({
         borderColor: 'black',
         borderWidth: 1,
         backgroundColor:'rgba(255,255,255,0.95)',
-        justifyContent:'space-evenly',
+        marginBottom: 1
     },
     restInfo: {
         marginLeft:10,
-        fontSize: 16,
+        fontSize: 18,
     },
     listItems: {
         flex: 1,
@@ -146,11 +147,12 @@ const styles = StyleSheet.create({
         backgroundColor:'rgba(255,255,255,0.7)',
         borderRadius: 5,
         borderColor: 'black',
-        borderWidth: 0.8,
+        borderWidth: 0.5,
+        marginBottom: 2,
     },
     pic: {
-        width: (ITEM_WIDTH - 5 * 2) / 6,
-        height: (ITEM_WIDTH - 5 * 2) / 6,
+        width: (ITEM_WIDTH-40) / 5,
+        height: (ITEM_WIDTH-40) / 5,
         borderRadius: 5,
         margin: 4,
         marginRight: 5,
