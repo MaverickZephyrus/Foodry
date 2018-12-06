@@ -66,7 +66,7 @@ class MainScreen extends React.Component {
     };
     
     _parserawdata(){
-        const raw = this.props.userData.currentData
+        const raw =  this.props.userData.currentData;
         const parsedata = []
         raw.map((single) => {
             single.foods.map((s) =>{
@@ -76,15 +76,15 @@ class MainScreen extends React.Component {
             parsedata.push(single.foods)
         });
         var result = [].concat.apply([], parsedata);
-        var unique = result.filter(
+        var unique = raw.filter(
           (set => u => !set.has(u.address) && set.add(u.address))(new Set())
         );
+        // console.log(unique)
         this.setState({
             data: unique,
             fullData: unique,
             foodDetail: result
         });
-
     };
 
       render() {
