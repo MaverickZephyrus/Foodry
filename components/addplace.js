@@ -69,6 +69,7 @@ export class AddPlace extends React.Component {
     _addPlace = () => {
         console.log('adding...');
         // console.log(this.state.modalData);
+        let placeExists = false;
         let id = this.state.modalData.item.name.toLowerCase().slice(0, 3) + this.state.modalData.item.formatted_address.toLowerCase().slice(-3);
         console.log(id);
         let resto = {
@@ -78,13 +79,35 @@ export class AddPlace extends React.Component {
             rating: this.state.modalData.item.rating,
             foods: []
         };
-        this.props.addPlace(resto);
-        console.log(this.props.userData.currentData[0].id);
+        for (i in this.props.userData.currentData) {
+            console.log(this.props.userData.currentData[i].id);
+            if (this.props.userData.currentData[i].id == id) {
+                console.log('its ', placeExists);
+                placeExists = true;
+                console.log('now its ', placeExists);
+            }
+        }
+        if (placeExists == false) {
+            this.props.addPlace(resto);
+            if (this.props.userData.currentData[0].id == id) {
+                this.setState({ modalShow: false });
+                this.props.navigation.push('Main');
+            }
+        } else {
+            Alert.alert(
+                'Error adding place',
+                'Place was not added because it is already in your list of places.',
+                [
+                    { text: 'OK', onPress: () => this.setState({modalShow:false}) }
+                ],
+                { cancelable: false }
+            )
+        }
+        // console.log(this.props.userData.currentData[0].id);
         // if (this.props.userData.currentData[0].id == id) {
         //     this.props.navigation.goBack();
         // }
-        this.setState({ modalShow: false })
-        this.props.navigation.push('Main')
+        
     }
 
 
