@@ -52,8 +52,9 @@ class MainScreen extends React.Component {
         return{
             title: 'Restaurant Details',
             headerTitleStyle: {
-                marginLeft: 0,
-            }
+                marginLeft: 15,
+            },
+            headerLeft: null
         }
     };
 

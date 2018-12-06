@@ -55,7 +55,7 @@ const SuperStack = createStackNavigator(
       },
     },
      MyPlace: {
-      screen: MyPlaceScreen
+      screen: MyPlaceScreen,
     },
     AddScreen:{
       screen: AddScreen
