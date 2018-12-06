@@ -80,7 +80,7 @@ class MainScreen extends React.Component {
                               "https://static1.squarespace.com/static/5849a1775016e1094e1d0763/t/5849ddc1197aeaa33558470e/1481235920269/2016-01-Sushi-plate.jpg?format=1500w",
                           price: "$15.99",
                           notes:
-                              "I love it for the user to search the list, we need to add a search bar on the top of the FlatList. FlatList has a prop to add any custom component to its header. I love it. I love it for the user to search the list, we need to add a search bar on the top of the FlatList. FlatList has a prop to add any custom component to its header. I love it. I love it for the user to search the list, we need to add a search bar on the top of the FlatList. FlatList has a prop to add any custom component to its header. I love it.",
+                              "I love it for the user dto search the list, we need to add a search bar on the top of the FlatList. FlatList has a prop to add any custom component to its header. I love it. I love it for the user to search the list, we need to add a search bar on the top of the FlatList. FlatList has a prop to add any custom component to its header. I love it. I love it for the user to search the list, we need to add a search bar on the top of the FlatList. FlatList has a prop to add any custom component to its header. I love it.",
                           date: "Nov 15, 2018",
                       },
                       {
@@ -89,7 +89,7 @@ class MainScreen extends React.Component {
                               "https://static.cuisineaz.com/610x610/i10453-pizza-aux-crevettes.jpg",
                           price: "$8.99",
                           notes:
-                              "I love it for the user to search the list, we need to add a search bar on the top of the FlatList. FlatList has a prop to add any custom component to its header. I love it.",
+                              "I love it for the ussdfer to search the list, we need to add a search bar on the top of the FlatList. FlatList has a prop to add any custom component to its header. I love it.",
                           date: "Nov 15, 2018",
                       }
                   ]
@@ -106,7 +106,7 @@ class MainScreen extends React.Component {
                               "https://sushiaji.ca/img/cdn/533_ff8cac35529f89434e1d291c61d9e5a8.jpg",
                           price: "$15.99",
                           notes:
-                              "I love it for the user to search the list, we need to add a search bar on the top of the FlatList. FlatList has a prop to add any custom component to its header. I love it.",
+                              "I love it for the usersa to search the list, we need to add a search bar on the top of the FlatList. FlatList has a prop to add any custom component to its header. I love it.",
                           date: "Nov 15, 2018",
                       },
                       {
@@ -115,7 +115,7 @@ class MainScreen extends React.Component {
                               "https://i.pinimg.com/originals/c9/ef/71/c9ef71ab42e904e0b31832e13b06b99b.jpg",
                           price: "$8.99",
                           notes:
-                              "I love it for the user to search the list, we need to add a search bar on the top of the FlatList. FlatList has a prop to add any custom component to its header. I love it.",
+                              "I love it for1asfdsa the user to search the list, we need to add a search bar on the top of the FlatList. FlatList has a prop to add any custom component to its header. I love it.",
                           date: "Nov 15, 2018",
                       }
                   ]

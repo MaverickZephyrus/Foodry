@@ -14,7 +14,7 @@ export default class Details extends React.Component {
         }};
 
     static navigationOptions = {
-        title: 'Food Details',
+        title: 'Edit Food Details',
         headerTitleStyle: {
             marginLeft: 0,
         }
