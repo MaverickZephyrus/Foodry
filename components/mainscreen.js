@@ -302,7 +302,7 @@ const styles = StyleSheet.create({
         width: ITEM_WIDTH-ITEM_WIDTH/15,
         backgroundColor: 'white',
         borderRadius:10,
-        marginTop: ITEM_WIDTH/2
+        marginTop: ITEM_HEIGHT/4
     },
     textx: {
         paddingLeft: ITEM_WIDTH/2 -25,

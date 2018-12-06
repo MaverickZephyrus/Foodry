@@ -10,6 +10,7 @@ import FoodDetails from './components/FoodDetails';
 import AddPlace from './components/addplace';
 import Details from './components/Details';
 
+
 // NOTE: Lines 13, 18, and 84
 // Redux related imports
 import { Provider } from 'react-redux';
