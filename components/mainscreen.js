@@ -134,6 +134,7 @@ class MainScreen extends React.Component {
     // Default behaviour of app to load data from local storage when starting
     _loadFromAsyncStorage = async() => {
         let data = await AsyncStorage.getItem('userData');
+
         if (data != null) {
             let parsedData = JSON.parse(data);
             // console.log(parsedData);
@@ -166,6 +167,8 @@ class MainScreen extends React.Component {
         var result = result.filter(
             (set => u => !set.has(u.notes) && set.add(u.notes))(new Set())
           );
+
+        // var reversedresult = result.reverse();
         this.setState({
             data: result,
             fullData: result
