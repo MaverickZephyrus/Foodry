@@ -57,7 +57,6 @@ class AddScreen extends React.Component {
   _saveBut = async (id, newFood) => {
     let data = this.props.navigation.getParam('data1', 'NO DATA');
     let raw =  this.props.navigation.getParam('data2', 'NO DATA');
-
     this.props.saveToAsyncStorage(id, newFood);
     this.props.navigation.push('Main');
   }
