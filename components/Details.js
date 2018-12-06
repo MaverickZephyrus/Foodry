@@ -54,18 +54,20 @@ export default class Details extends React.Component {
                 <View style={styles.detailbox}>
                             <Text
                               style={{
-                                  margin: 10,
+                                  margin: 12,
                                   marginBottom: 0,
                                   fontSize: 18,
+                                  lineHeight: 24
                               }}> 
-                            <BigBold>{this.state.searchResult.food_name}</BigBold> {"\n"}{"\n"} <Bold>From: </Bold> {this.state.searchResult.restaurant} {"\n"} <Bold>Price: </Bold> {this.state.searchResult.price} {"\n"} <Bold>Notes: </Bold> 
+                            <BigBold>{this.state.searchResult.food_name}</BigBold>{"\n"}{"\n"}<Bold>From: </Bold> {this.state.searchResult.restaurant}{"\n"}<Bold>Price: </Bold> {this.state.searchResult.price}{"\n"}<Bold>Notes: </Bold> 
                             </Text>
 
                         <ScrollView>
                             <Text style={{
-                                  margin: 10,
+                                  margin: 12,
                                   marginTop: 0,
                                   fontSize: 18,
+                                  marginLeft: 16
                               }}> 
                             " {this.state.searchResult.notes} "</Text>
                         </ScrollView>
@@ -91,7 +93,8 @@ const styles = StyleSheet.create({
     detailbox: {
         backgroundColor: 'rgba(0,0,0,0)',
         width: width,
-        height: height/2,
+        height: height/2.5,
+
     }
 })
 
