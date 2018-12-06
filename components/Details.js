@@ -60,7 +60,7 @@ export default class Details extends React.Component {
                             
                             </Text>
 
-                          <Text style={{ margin: 10, fontSize:11, color:'grey'}}>{this.state.searchResult.date} </Text>
+                          <Text style={{ margin: 10, fontSize:11, color:'#696969'}}>{this.state.searchResult.date} </Text>
 
                     </ScrollView>
                 </View>

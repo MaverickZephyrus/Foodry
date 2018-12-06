@@ -71,7 +71,7 @@ class MainScreen extends React.Component {
         const { column, key } = this.state;
         const { navigation } = this.props;
         const Bold = (props) => <Text style={{fontWeight: 'bold'}}>{props.children}</Text>
-        const BoldBig = (props) => <Text style={{fontWeight: 'bold', fontSize: 20}}>{props.children}</Text>
+        const Dateformat = (props) => <Text style={{color:'#696969'}}>{props.children}</Text>
         return (
             <View style={styles.container}>
             <ImageBackground style={ styles.imgBackground } 
@@ -94,7 +94,7 @@ class MainScreen extends React.Component {
                         onPress={() => { this.props.navigation.navigate('Details', {'img' : item.img, 'food_name': item.food_name, 'cost': item.cost, 'notes': item.notes, 'restaurant': item.restaurant, 'date': item.date }) }}>
                         <View style={styles.listItems}>
                             <Image source={{uri: item.img}} style={styles.pic}/>
-                            <Text style={{marginLeft: 3}}><Bold>{item.food_name}</Bold> {"\n"} {"\n"}{item.price} {"\n"} {"\n"}{item.date}</Text>
+                            <Text style={{marginLeft: 3}}><Bold>{item.food_name}</Bold> {"\n"} {"\n"}{item.price} {"\n"} {"\n"}<Dateformat>{item.date}</Dateformat></Text>
 
                         </View>
                         </TouchableHighlight>
