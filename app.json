@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Foodry",
-    "description": "This project is really great.",
+    "description": "Record foods you've tried at your favorite restos.",
     "slug": "Foodry",
     "privacy": "public",
     "sdkVersion": "31.0.0",
@@ -9,7 +9,7 @@
       "ios",
       "android"
     ],
-    "version": "1.0.0",
+    "version": "0.0.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
