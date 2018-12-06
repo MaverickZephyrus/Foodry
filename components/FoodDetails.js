@@ -71,9 +71,11 @@ class MainScreen extends React.Component {
         const { column, key } = this.state;
         const { navigation } = this.props;
         const Bold = (props) => <Text style={{fontWeight: 'bold'}}>{props.children}</Text>
+        const Dateformat = (props) => <Text style={{color:'#696969'}}>{props.children}</Text>
         return (
             <View style={styles.container}>
             <ImageBackground style={ styles.imgBackground } 
+
           resizeMode='cover' 
           source={{uri:'https://images.unsplash.com/photo-1520405350075-ea8df9ae72a5?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=56df2db5de7d9fe47c39161937d88baf&auto=format&fit=crop&w=934&q=80'}}> 
                 <View style={styles.restHeader}>
@@ -81,17 +83,19 @@ class MainScreen extends React.Component {
                     <Text style={styles.restInfo}><Bold>Address: </Bold>{raw1[0].address}</Text>
                     <Text style={styles.restInfo}><Bold>Rating: </Bold>{raw1[0].rating}</Text>
                 </View>
-
+                
                 <FlatList 
                     data={place}
                     keyExtractor={(x, i) => i.toString()}
+                    numColumns={1}
                     renderItem={({ item }) => (
 
                         <TouchableHighlight
-                        onPress={() => { this.props.navigation.navigate('Details', {'img' : item.img, 'food_name': item.food_name, 'cost': item.cost, 'notes': item.notes, 'restaurant': item.restaurant, 'date': item.date }) }}>
+                        onPress={() => { this.props.navigation.navigate('Details', {'img' : item.img, 'food_name': item.food_name, 'price': item.price, 'notes': item.notes, 'restaurant': item.restaurant, 'date': item.date }) }}>
                         <View style={styles.listItems}>
                             <Image source={{uri: item.img}} style={styles.pic}/>
-                            <Text style={{marginLeft: 2, flex:1, justifyContent:'center', flexDirection: 'row'}}><Bold>{item.food_name}</Bold> --- {item.price}</Text>
+                            <Text style={{marginLeft: 3}}><Bold>{item.food_name}</Bold> {"\n"} {"\n"}{item.price} {"\n"} {"\n"}<Dateformat>{item.date}</Dateformat></Text>
+
                         </View>
                         </TouchableHighlight>
 
@@ -125,29 +129,33 @@ const styles = StyleSheet.create({
         flex: 1
         },
     restHeader: {
-        height:ITEM_HEIGHT/8, 
+        height:ITEM_HEIGHT/7, 
         justifyContent:'space-evenly',
-        borderWidth: 2,
-        backgroundColor: 'rgba(255,255,255,0.4)'
+        borderColor: 'black',
+        borderWidth: 1,
+        backgroundColor:'rgba(255,255,255,0.95)',
+        justifyContent:'space-evenly',
     },
     restInfo: {
-        marginLeft:10
+        marginLeft:10,
+        fontSize: 16,
     },
     listItems: {
         flex: 1,
         flexDirection: 'row',
-        backgroundColor:'rgba(255,255,255,0.7)', 
-        marginVertical: 2, 
+        backgroundColor:'rgba(255,255,255,0.7)',
         borderRadius: 5,
         borderColor: 'black',
+        borderWidth: 0.8,
     },
     pic: {
-        width: 50,
-        height: 50,
+        width: (ITEM_WIDTH - 5 * 2) / 6,
+        height: (ITEM_WIDTH - 5 * 2) / 6,
+        borderRadius: 5,
+        margin: 4,
         marginRight: 5,
-        marginBottom: 5,
-        marginTop: 5,
-        marginLeft: 5,
+
+
     },
     add_circle_icon: {
         right: 0,
@@ -158,6 +166,11 @@ const styles = StyleSheet.create({
         backgroundColor:'rgba(255,255,255,0.4)',
         borderRadius:50,
         },
+    imgBackground: {
+      width: '100%',
+      height: '100%',
+      flex: 1 
+  },
 });
 
 // Bindings for redux
