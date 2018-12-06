@@ -49,7 +49,13 @@ class MainScreen extends React.Component {
     }
 
     static navigationOptions = ({ navigation }) => {
-        return{}
+        return{
+            title: 'Restaurant Details',
+            headerTitleStyle: {
+                marginLeft: 15,
+            },
+            headerLeft: null
+        }
     };
 
     render() {
@@ -57,8 +63,10 @@ class MainScreen extends React.Component {
         let raw =  this.props.navigation.getParam('raw', 'NO DATA');
         let restaurant = this.props.navigation.getParam('restaurant', 'NO DATA');
         var raw1 = _.filter(raw, {'restaurant': restaurant });
-        console.log(raw1);
         var place = _.filter(data, {'restaurant': restaurant });
+        var place = place.filter(
+            (set => u => !set.has(u.notes) && set.add(u.notes))(new Set())
+          );
         const { column, key } = this.state;
         const { navigation } = this.props;
         const Bold = (props) => <Text style={{fontWeight: 'bold'}}>{props.children}</Text>
@@ -66,14 +74,13 @@ class MainScreen extends React.Component {
         return (
             <View style={styles.container}>
             <ImageBackground style={ styles.imgBackground } 
-                      resizeMode='cover' 
-                      source={{uri:'https://images.unsplash.com/photo-1520405350075-ea8df9ae72a5?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=56df2db5de7d9fe47c39161937d88baf&auto=format&fit=crop&w=934&q=80'}}>
 
+          resizeMode='cover' 
+          source={{uri:'https://images.unsplash.com/photo-1520405350075-ea8df9ae72a5?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=56df2db5de7d9fe47c39161937d88baf&auto=format&fit=crop&w=934&q=80'}}> 
                 <View style={styles.restHeader}>
-                    <Text style={styles.restInfo}><BoldBig>{place[0].restaurant}</BoldBig></Text>
-                    <Text style={styles.restInfo}>{place[0].address}</Text>
-                    <Text style={styles.restInfo}>N/A</Text>
-                    <Text style={styles.restInfo}>N/A</Text>
+                    <Text style={styles.restInfo}><Bold>Restaurant: </Bold>{raw1[0].restaurant}</Text>
+                    <Text style={styles.restInfo}><Bold>Address: </Bold>{raw1[0].address}</Text>
+                    <Text style={styles.restInfo}><Bold>Rating: </Bold>{raw1[0].rating}</Text>
                 </View>
                 
                 <FlatList 
@@ -84,11 +91,10 @@ class MainScreen extends React.Component {
 
                         <TouchableHighlight
                         onPress={() => { this.props.navigation.navigate('Details', {'img' : item.img, 'food_name': item.food_name, 'cost': item.cost, 'notes': item.notes, 'restaurant': item.restaurant, 'date': item.date }) }}>
-
-
                         <View style={styles.listItems}>
                             <Image source={{uri: item.img}} style={styles.pic}/>
                             <Text style={{marginLeft: 3}}><Bold>{item.food_name}</Bold> {"\n"} {"\n"}{item.price} {"\n"} {"\n"}{item.date}</Text>
+
                         </View>
                         </TouchableHighlight>
 
@@ -100,10 +106,9 @@ class MainScreen extends React.Component {
           size={ITEM_WIDTH / 6}
           color='rgba(0, 0, 0, 1)'
           onPress={() => {
-            this.props.navigation.navigate('AddScreen', { 'data': raw1 })
+            this.props.navigation.navigate('AddScreen', { 'data': raw1, 'data1': data, 'data2': raw })
       }}
         />
-        
         </ImageBackground>
             </View>
         );
@@ -112,6 +117,11 @@ class MainScreen extends React.Component {
     }
 
 const styles = StyleSheet.create({
+    imgBackground: {
+        width: '100%',
+        height: '100%',
+        flex: 1
+    },
     container: {
         backgroundColor: "#fff",
         justifyContent: "center",
@@ -123,6 +133,7 @@ const styles = StyleSheet.create({
         borderColor: 'black',
         borderWidth: 1,
         backgroundColor:'rgba(255,255,255,0.95)',
+        justifyContent:'space-evenly',
     },
     restInfo: {
         marginLeft:10,

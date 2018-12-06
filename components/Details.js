@@ -13,6 +13,13 @@ export default class Details extends React.Component {
             searchResult: []
         }};
 
+    static navigationOptions = {
+        title: 'Food Details',
+        headerTitleStyle: {
+            marginLeft: 0,
+        }
+    };
+
     componentDidMount() {
         this._specificfood();
       };
@@ -27,18 +34,13 @@ export default class Details extends React.Component {
     const date = navigation.getParam('date');
 
 
-
+    
     this.setState({
         searchResult: {'img' : img, 'food_name': food_name, 'cost':cost, 'notes':notes, 'restaurant':restaurant, 'date':date }
     });
 
     console.log(this.state.searchResult);
     };
-
-
-
-
-  
 
     render () {
         const Bold = (props) => <Text style={{fontWeight: 'bold'}}>{props.children}</Text>
