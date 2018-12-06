@@ -143,7 +143,8 @@ class AddScreen extends React.Component {
            <View style={{flexDirection:'row', padding: 20}}>
            <TouchableHighlight 
            style={styles.saveButton}
-           onPress={() => {this._saveBut(restData[0].id, this.state.food)}}
+           onPress={() => {this._saveBut(restData[0].id, this.state.food),
+                          this.props.navigation.navigate('Details', {'img' : this.state.food.img, 'food_name': this.state.food.food_name, 'price': this.state.food.price, 'notes': this.state.food.notes, 'restaurant': this.state.food.restaurant, 'date': this.state.food.date })}}
            underlayColor="white"
            >
             <Text>Save</Text>
