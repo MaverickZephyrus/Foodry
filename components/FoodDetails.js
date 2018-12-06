@@ -52,9 +52,10 @@ class MainScreen extends React.Component {
         return{
             title: 'Restaurant Details',
             headerTitleStyle: {
-                marginLeft: 15,
+                marginLeft: 0,
             },
-            headerLeft: null
+            headerLeft: <Icon name='arrow-left'  size={ITEM_WIDTH / 14} style={{marginLeft:10}}
+            onPress={ () => { navigation.push('Main') }} />
         }
     };
 
