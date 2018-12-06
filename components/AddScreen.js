@@ -111,7 +111,7 @@ class AddScreen extends React.Component {
               food: {
                 food_name: this.state.food.food_name,
                 img: this.state.food.img,
-                price: text,
+                price: "$" + text,
                 notes: this.state.food.notes,
                 date: this.state.food.date,
                 address: restData[0].address,
