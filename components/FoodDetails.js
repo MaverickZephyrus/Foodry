@@ -91,7 +91,7 @@ class MainScreen extends React.Component {
                     renderItem={({ item }) => (
 
                         <TouchableHighlight
-                        onPress={() => { this.props.navigation.navigate('Details', {'img' : item.img, 'food_name': item.food_name, 'cost': item.cost, 'notes': item.notes, 'restaurant': item.restaurant, 'date': item.date }) }}>
+                        onPress={() => { this.props.navigation.navigate('Details', {'img' : item.img, 'food_name': item.food_name, 'price': item.price, 'notes': item.notes, 'restaurant': item.restaurant, 'date': item.date }) }}>
                         <View style={styles.listItems}>
                             <Image source={{uri: item.img}} style={styles.pic}/>
                             <Text style={{marginLeft: 3}}><Bold>{item.food_name}</Bold> {"\n"} {"\n"}{item.price} {"\n"} {"\n"}<Dateformat>{item.date}</Dateformat></Text>

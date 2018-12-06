@@ -136,7 +136,7 @@ class MainScreen extends React.Component {
         let data = await AsyncStorage.getItem('userData');
         if (data != null) {
             let parsedData = JSON.parse(data);
-            console.log(parsedData);
+            // console.log(parsedData);
             this.props.loadFromAsyncStorage(parsedData);
         }
     }
@@ -261,25 +261,27 @@ class MainScreen extends React.Component {
                         <ScrollView contentContainerStyle={styles.modal}>
                                 <Icon style={styles.textx} name="close" size={25}  onPress={() => {this.setModalVisible(false, 0, { 'notes' : 'empty'})}} color="#000" />
                                 
-                                <Image style={{flex:1, resizeMode: 'contain'}} source={{uri: this.state.item_data.img}}></Image>
+                                <Image style={{flex:1}} source={{uri: this.state.item_data.img}}></Image>
 
                                 <Text
                                     style={{
                                         margin: 10,
+                                        height: 100,
+                                        overflow: "hidden"
                                     }}
                                     >
 
-                                    <Bold>{this.state.item_data.food_name}</Bold> --- {this.state.item_data.cost} @ {this.state.item_data.restaurant} {"\n"} " {this.stringTruncate(this.state.item_data.notes, 200)} " 
+                                    <Bold>{this.state.item_data.food_name}</Bold> --- {this.state.item_data.price} {"\n"} @ {this.state.item_data.restaurant} {"\n"} " {this.stringTruncate(this.state.item_data.notes, 200)} " 
                                 </Text>
 
 
-                                <Text style={{ margin: 10, fontSize:11, color:'grey'}}>{this.state.item_data.date} </Text>
+                                <Text style={{ margin: 10, fontSize:11, color:'#696969'}}>{this.state.item_data.date} </Text>
                                 <Text style={{ margin: 10, color: 'blue'}}
                                     onPress={() => {
             this.setState({ modalVisible: false }),
-            this.props.navigation.navigate('Details', {'img' : this.state.item_data.img, 'food_name': this.state.item_data.food_name, 'cost': this.state.item_data.cost, 'notes': this.state.item_data.notes, 'restaurant': this.state.item_data.restaurant, 'date': this.state.item_data.date })
+            this.props.navigation.navigate('Details', {'img' : this.state.item_data.img, 'food_name': this.state.item_data.food_name, 'price': this.state.item_data.price, 'notes': this.state.item_data.notes, 'restaurant': this.state.item_data.restaurant, 'date': this.state.item_data.date })
 
-            }}><Bold>More...</Bold></Text>
+            }}><Bold>Edit</Bold></Text>
 
                         </ScrollView>
                         </BlurView>
