@@ -136,7 +136,7 @@ class MainScreen extends React.Component {
         let data = await AsyncStorage.getItem('userData');
         if (data != null) {
             let parsedData = JSON.parse(data);
-            // console.log(parsedData);
+            console.log(parsedData);
             this.props.loadFromAsyncStorage(parsedData);
         }
     }
@@ -279,7 +279,7 @@ class MainScreen extends React.Component {
             this.setState({ modalVisible: false }),
             this.props.navigation.navigate('Details', {'img' : this.state.item_data.img, 'food_name': this.state.item_data.food_name, 'cost': this.state.item_data.cost, 'notes': this.state.item_data.notes, 'restaurant': this.state.item_data.restaurant, 'date': this.state.item_data.date })
 
-            }}><Bold>Edit</Bold></Text>
+            }}><Bold>More...</Bold></Text>
 
                         </ScrollView>
                         </BlurView>
