@@ -67,11 +67,11 @@ export class AddPlace extends React.Component {
     }
 
     _addPlace = () => {
-        console.log('adding...');
+        // console.log('adding...');
         // console.log(this.state.modalData);
         let placeExists = false;
         let id = this.state.modalData.item.name.toLowerCase().slice(0, 3) + this.state.modalData.item.formatted_address.toLowerCase().slice(-3);
-        console.log(id);
+        // console.log(id);
         let resto = {
             id: id,
             restaurant: this.state.modalData.item.name,
@@ -80,14 +80,15 @@ export class AddPlace extends React.Component {
             foods: []
         };
         for (i in this.props.userData.currentData) {
-            console.log(this.props.userData.currentData[i].id);
+            // console.log(this.props.userData.currentData[i].id);
             if (this.props.userData.currentData[i].id == id) {
-                console.log('its ', placeExists);
+                // console.log('its ', placeExists);
                 placeExists = true;
-                console.log('now its ', placeExists);
+                // console.log('now its ', placeExists);
             }
         }
         if (placeExists == false) {
+            console.log('adding...');
             this.props.addPlace(resto);
             if (this.props.userData.currentData[0].id == id) {
                 this.setState({ modalShow: false });

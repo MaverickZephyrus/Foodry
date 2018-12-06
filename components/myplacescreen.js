@@ -57,17 +57,27 @@ class MainScreen extends React.Component {
       }
 
     _handleSearch = (text) =>{
-    const data = _.filter(this.state.fullData, (lc) =>
+    let data = _.filter(this.state.fullData, (lc) =>
     {return lc.restaurant.toLowerCase().indexOf(text.toLowerCase()) != -1 || lc.food_name.toLowerCase().indexOf(text.toLowerCase()) != -1 || lc.price.toLowerCase().indexOf(text.toLowerCase()) != -1})
         this.setState({
             data: data
         });
     
     };
+
+    // method to return new object and not the state itself
+    _copyState = () => {
+        // console.log('for raw \n', this.props.userData.currentData);
+        let raw = [];
+        for (i in this.props.userData.currentData) {
+            raw.push(this.props.userData.currentData[i]);
+        }
+        return raw;
+    }
     
     _parserawdata(){
-        const raw =  this.props.userData.currentData;
-        const parsedata = []
+        let raw =  this._copyState();
+        let parsedata = []
         raw.map((single) => {
             single.foods.map((s) =>{
                 s['restaurant'] = single.restaurant

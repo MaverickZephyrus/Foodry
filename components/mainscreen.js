@@ -126,7 +126,7 @@ class MainScreen extends React.Component {
         if (test == null) {
             AsyncStorage.setItem('userData', JSON.stringify(data));
         } else {
-            console.log('Not null');
+            console.log('AsyncStorage is not null');
         }
     }
     // end of preload data function
@@ -136,13 +136,13 @@ class MainScreen extends React.Component {
         let data = await AsyncStorage.getItem('userData');
         if (data != null) {
             let parsedData = JSON.parse(data);
-            // console.log(parsedData);
+            // console.log('parsed data \n',parsedData);
             this.props.loadFromAsyncStorage(parsedData);
         }
     }
 
     _handleSearch = (text) =>{
-    const data = _.filter(this.state.fullData, (lc) =>
+    let data = _.filter(this.state.fullData, (lc) =>
     {return lc.restaurant.toLowerCase().indexOf(text.toLowerCase()) != -1 || lc.food_name.toLowerCase().indexOf(text.toLowerCase()) != -1 || lc.price.toLowerCase().indexOf(text.toLowerCase()) != -1})
         this.setState({
             data: data
@@ -150,9 +150,20 @@ class MainScreen extends React.Component {
     
     };
 
+    // method to return new object and not state itself
+    _copyState = () => {
+        // console.log('Count of currentData ', this.props.userData.currentData.length);
+        // console.log('for raw \n', this.props.userData.currentData);
+        let raw = [];
+        for (i in this.props.userData.currentData) {
+            raw.push(this.props.userData.currentData[i]);
+        }
+        return raw;
+    }
+
     _parserawdata(){
-        const raw = this.props.userData.currentData;
-        const parsedata = []
+        let raw = this._copyState();
+        let parsedata = []
         // console.log(raw)
         raw.map((single) => {
             single.foods.map((s) =>{
@@ -220,7 +231,7 @@ class MainScreen extends React.Component {
         </View>
             <FlatList
                 data={this.state.data}
-                keyExtractor={(x, i) => i}
+                keyExtractor={(x, i) => i.toString()}
                 key={key}
                 numColumns={column}
                 renderItem={({item, index}) => (
@@ -240,8 +251,7 @@ class MainScreen extends React.Component {
                                 <Text
                                 style={{
                                     width: (ITEM_WIDTH - 5 * column) / column,
-                                    textAlign:'center',
-                                    fontSize: 15
+                                    textAlign:'center'
                                 }}
                                 >
                                 <Bold>{item.food_name}</Bold> --- {item.price} {"\n"}@ {item.restaurant}
@@ -267,9 +277,8 @@ class MainScreen extends React.Component {
                                 <Text
                                     style={{
                                         margin: 10,
-                                        height: 135,
-                                        overflow: "hidden",
-                                        fontSize: 18,
+                                        height: 100,
+                                        overflow: "hidden"
                                     }}
                                     >
 
@@ -277,13 +286,13 @@ class MainScreen extends React.Component {
                                 </Text>
 
 
-                                <Text style={{ margin: 10, fontSize:15, color:'#696969'}}>{this.state.item_data.date} </Text>
-                                <Text style={{ margin: 10, color: '#002699', fontSize:15, marginBottom: 14}}
+                                <Text style={{ margin: 10, fontSize:11, color:'#696969'}}>{this.state.item_data.date} </Text>
+                                <Text style={{ margin: 10, color: 'blue'}}
                                     onPress={() => {
             this.setState({ modalVisible: false }),
             this.props.navigation.navigate('Details', {'img' : this.state.item_data.img, 'food_name': this.state.item_data.food_name, 'price': this.state.item_data.price, 'notes': this.state.item_data.notes, 'restaurant': this.state.item_data.restaurant, 'date': this.state.item_data.date })
 
-            }}><Bold>Edit</Bold></Text>
+            }}><Bold>More...</Bold></Text>
 
                         </ScrollView>
                         </BlurView>
@@ -307,11 +316,11 @@ const styles = StyleSheet.create({
     flex:1
   },
     modal: {
-        height: ITEM_HEIGHT/1.40,
+        height: ITEM_HEIGHT/1.50,
         width: ITEM_WIDTH-ITEM_WIDTH/15,
         backgroundColor: 'white',
         borderRadius:10,
-        marginTop: ITEM_HEIGHT/5
+        marginTop: ITEM_HEIGHT/4
     },
     textx: {
         paddingLeft: ITEM_WIDTH/2 -25,
