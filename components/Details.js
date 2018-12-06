@@ -14,7 +14,7 @@ export default class Details extends React.Component {
         }};
 
     static navigationOptions = {
-        title: 'Edit Food Details',
+        title: 'Food Details',
         headerTitleStyle: {
             marginLeft: 0,
         }
@@ -28,7 +28,7 @@ export default class Details extends React.Component {
     const { navigation } = this.props;
     const img = navigation.getParam('img');
     const food_name = navigation.getParam('food_name');
-    const cost = navigation.getParam('cost');
+    const price = navigation.getParam('price');
     const notes = navigation.getParam('notes');
     const restaurant = navigation.getParam('restaurant');
     const date = navigation.getParam('date');
@@ -36,7 +36,7 @@ export default class Details extends React.Component {
 
     
     this.setState({
-        searchResult: {'img' : img, 'food_name': food_name, 'cost':cost, 'notes':notes, 'restaurant':restaurant, 'date':date }
+        searchResult: {'img' : img, 'food_name': food_name, 'price':price, 'notes':notes, 'restaurant':restaurant, 'date':date }
     });
 
     console.log(this.state.searchResult);
@@ -44,6 +44,7 @@ export default class Details extends React.Component {
 
     render () {
         const Bold = (props) => <Text style={{fontWeight: 'bold'}}>{props.children}</Text>
+        const BigBold = (props) => <Text style={{fontWeight: 'bold', fontSize: 22}}>{props.children}</Text>
 
         return (
             <View style={styles.container}>
@@ -51,18 +52,26 @@ export default class Details extends React.Component {
                 <Image style={{flex: 1, width: width, height: height/2}} source={{uri: this.state.searchResult.img}}></Image>
 
                 <View style={styles.detailbox}>
-                    <ScrollView>
                             <Text
                               style={{
                                   margin: 10,
+                                  marginBottom: 0,
+                                  fontSize: 18,
                               }}> 
-                            <Bold>{this.state.searchResult.food_name}</Bold> --- {this.state.searchResult.cost} {"\n"}@ {this.state.searchResult.restaurant} {"\n"} {"\n"} " {this.state.searchResult.notes} " 
-                            
+                            <BigBold>{this.state.searchResult.food_name}</BigBold> {"\n"}{"\n"} <Bold>From: </Bold> {this.state.searchResult.restaurant} {"\n"} <Bold>Price: </Bold> {this.state.searchResult.price} {"\n"} <Bold>Notes: </Bold> 
                             </Text>
 
-                          <Text style={{ margin: 10, fontSize:11, color:'grey'}}>{this.state.searchResult.date} </Text>
+                        <ScrollView>
+                            <Text style={{
+                                  margin: 10,
+                                  marginTop: 0,
+                                  fontSize: 18,
+                              }}> 
+                            " {this.state.searchResult.notes} "</Text>
+                        </ScrollView>
 
-                    </ScrollView>
+                          <Text style={{ margin: 10, fontSize:15, color:'#696969'}}>{this.state.searchResult.date} </Text>
+
                 </View>
             </View>
         )
